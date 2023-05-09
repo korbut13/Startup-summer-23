@@ -1,5 +1,5 @@
-import { Outlet } from 'react-router-dom';
-import HeaderComponent from '../components/header/Header';
+import { Outlet } from "react-router-dom";
+import HeaderComponent from "../components/header/Header";
 
 export default function Root() {
   return (
@@ -19,5 +19,5 @@ export default function Root() {
         <Outlet></Outlet>
       </div>
     </>
-  )
+  );
 }
