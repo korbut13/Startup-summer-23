@@ -1,0 +1,17 @@
+@font-face {
+  font-family: "Poppins";
+  src: local("Poppins-Bold"),
+    url("./fonts/Poppins-Bold.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Inter-Regular";
+  src: local("Inter-Regular"),
+    url("./fonts/Inter-Regular.ttf") format("truetype");
+}
+
+body {
+  margin: 0 auto;
+  background-color: #F5F5F5;
+  font-family: "Inter-Regular";
+}

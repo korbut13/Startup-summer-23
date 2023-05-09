@@ -4,10 +4,11 @@ import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
-import Root from './routes/root';
+import Root from './routes/Root';
 import './index.css';
+import JobSearchPage from './routes/jobSearch_page';
 import ErrorPage from './routes/error-page';
-import SelectedVacancies from './routes/selected';
+import SelectedVacanciesPage from './routes/selected_page';
 
 
 const router = createBrowserRouter([
@@ -17,8 +18,12 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     children: [
       {
+        path: '',
+        element: <JobSearchPage />,
+      },
+      {
         path: 'selected',
-        element: <SelectedVacancies />,
+        element: <SelectedVacanciesPage />,
       },
     ],
   },

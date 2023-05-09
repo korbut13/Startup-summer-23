@@ -1,9 +1,11 @@
-import { Outlet, Link } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
+import HeaderComponent from '../components/header/Header';
 
 export default function Root() {
   return (
     <>
-      <nav>
+      <HeaderComponent />
+      {/* <nav>
         <ul>
           <li>
             <Link to={``}>Поиск вакансий</Link>
@@ -12,7 +14,7 @@ export default function Root() {
             <Link to={`/selected`}>Избранное</Link>
           </li>
         </ul>
-      </nav>
+      </nav> */}
       <div id="detail">
         <Outlet></Outlet>
       </div>
