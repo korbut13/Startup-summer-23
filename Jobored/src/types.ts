@@ -28,3 +28,12 @@ export type CatalogBranches = {
     },
   ]
 }
+export type Vacancy = {
+  "profession": string;
+  "firm_name": string;
+  "town": { id: number, title: string };
+  "type_of_work": { id: number, title: string };
+  "payment_to": string;
+  "payment_from": string;
+  "currency": string;
+}

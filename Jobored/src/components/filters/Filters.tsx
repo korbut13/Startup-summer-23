@@ -2,8 +2,12 @@ import { Group, Title, Button } from "@mantine/core";
 import { CloseIcon } from "./_closeIcon";
 import FilterBranch from "./FilterBranch";
 import FilterSalary from "./FilterSalary";
+import { vacancies } from "../../requests/vacancies";
+import { token } from "../../requests/token";
 
 export default function Filters() {
+  console.log("token", token)
+  console.log("vacancies", vacancies)
   return (
     <>
       <Group style={{ justifyContent: "space-between" }}>
