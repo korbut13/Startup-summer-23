@@ -10,15 +10,23 @@ export default function Filters() {
         <Title order={3} fz="lg">
           Фильтры
         </Title>
-        <Button color="gray.5" rightIcon={<CloseIcon />} variant="white">Сбросить все
+        <Button color="gray.5" rightIcon={<CloseIcon />} variant="white">
+          Сбросить все
         </Button>
       </Group>
       <form action="">
         <FilterBranch />
         <FilterSalary />
-        <Button type="submit" w="100%" bg="#5E96FC" fw={500} sx={{ fontFamily: "Inter-Regular" }}>Применить</Button>
+        <Button
+          type="submit"
+          w="100%"
+          bg="#5E96FC"
+          fw={500}
+          sx={{ fontFamily: "Inter-Regular" }}
+        >
+          Применить
+        </Button>
       </form>
-
     </>
   );
 }
