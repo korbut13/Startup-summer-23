@@ -1,5 +1,9 @@
+import React from "react";
 import { Box, Container } from "@mantine/core";
 import Filters from "../components/filters/Filters";
+import SearchInput from "../components/header/SearchInput";
+import { VacancyCard } from "../components/vacanciesCard/VacancyCard";
+import { vacancies } from "../requests/vacancies";
 export default function JobSearchPage() {
   return (
     <>
@@ -25,13 +29,15 @@ export default function JobSearchPage() {
           <Box
             sx={(theme) => ({
               backgroundColor: "white",
-              textAlign: "center",
               padding: theme.spacing.xl,
               borderRadius: theme.radius.md,
               border: "1px solid #EAEBED",
               width: 773,
             })}
-          ></Box>
+          >
+            <SearchInput />
+            <VacancyCard vacancies={vacancies} />
+          </Box>
         </Container>
       }
     </>

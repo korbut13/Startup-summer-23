@@ -1,6 +1,7 @@
 import { url } from "../url";
 import { authorizationData } from "../authorisation";
-import { token } from "./token"
+import { token } from "./token";
+import { Vacancy } from "../types";
 
 export async function getVacancies() {
   return await fetch(`${url}/2.0/vacancies/`, {
@@ -11,7 +12,7 @@ export async function getVacancies() {
       "Authorization": `Bearer ${token}`,
       "Content-Type": "application/json",
     }
-  }).then((response) => response.json())
+  }).then((response) => response.json()).then((response: { objects: Vacancy[] }) => response.objects)
 }
 
 export const vacancies = await getVacancies();
