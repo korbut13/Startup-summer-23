@@ -1,5 +1,6 @@
 import { Select } from "@mantine/core";
 import { ChevronDown } from "tabler-icons-react";
+import { cataloBranches } from "../../requests/catalogBranches";
 
 export default function FilterBranch() {
   return (
@@ -15,7 +16,7 @@ export default function FilterBranch() {
         rightSection: { pointerEvents: "none" },
         label: { fontSize: 16, fontWeight: 700 },
       }}
-      data={["React", "Angular", "Svelt", "Vue"]}
+      data={cataloBranches}
     />
   );
 }
