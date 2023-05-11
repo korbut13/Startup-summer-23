@@ -4,7 +4,7 @@ import { Search } from 'tabler-icons-react';
 export default function SearchInput() {
   return (
     <>
-      <Group>
+      <Group mb={16}>
         <Input.Wrapper w="80%">
           <Input
             icon={<Search />}

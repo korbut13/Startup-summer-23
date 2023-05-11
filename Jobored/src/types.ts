@@ -33,7 +33,7 @@ export type Vacancy = {
   firm_name: string;
   town: { id: number; title: string };
   type_of_work: { id: number; title: string };
-  payment_to: string;
-  payment_from: string;
+  payment_to: number;
+  payment_from: number;
   currency: string;
 };

@@ -1,7 +1,7 @@
 import { Box, Container } from '@mantine/core';
 import Filters from '../components/filters/Filters';
 import SearchInput from '../components/header/SearchInput';
-import { VacancyCard } from '../components/vacanciesCard/VacancyCard';
+import { VacancyCards } from '../components/vacanciesCard/VacancyCards';
 import { vacancies } from '../requests/vacancies';
 export default function JobSearchPage() {
   return (
@@ -35,7 +35,7 @@ export default function JobSearchPage() {
             })}
           >
             <SearchInput />
-            <VacancyCard vacancies={vacancies} />
+            <VacancyCards vacancies={vacancies} />
           </Box>
         </Container>
       }
