@@ -1,5 +1,5 @@
 import { Input, Button, Group } from '@mantine/core';
-import { Search } from "tabler-icons-react";
+import { Search } from 'tabler-icons-react';
 
 export default function SearchInput() {
   return (
@@ -13,7 +13,7 @@ export default function SearchInput() {
             width="100%"
           />
         </Input.Wrapper>
-        <Button >Поиск</Button>
+        <Button>Поиск</Button>
       </Group>
     </>
   );

@@ -1,4 +1,4 @@
-import { NumberInput, MantineProvider } from "@mantine/core";
+import { NumberInput, MantineProvider } from '@mantine/core';
 
 export default function FilterSalary() {
   return (
@@ -18,13 +18,7 @@ export default function FilterSalary() {
           },
         }}
       >
-        <NumberInput
-          type="number"
-          ta="left"
-          mb={8}
-          label="Оклад"
-          placeholder="От"
-        />
+        <NumberInput type="number" ta="left" mb={8} label="Оклад" placeholder="От" />
         <NumberInput type="number" ta="left" mb={20} placeholder="До" />
       </MantineProvider>
     </>

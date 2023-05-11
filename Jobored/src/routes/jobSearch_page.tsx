@@ -1,9 +1,8 @@
-import React from "react";
-import { Box, Container } from "@mantine/core";
-import Filters from "../components/filters/Filters";
-import SearchInput from "../components/header/SearchInput";
-import { VacancyCard } from "../components/vacanciesCard/VacancyCard";
-import { vacancies } from "../requests/vacancies";
+import { Box, Container } from '@mantine/core';
+import Filters from '../components/filters/Filters';
+import SearchInput from '../components/header/SearchInput';
+import { VacancyCard } from '../components/vacanciesCard/VacancyCard';
+import { vacancies } from '../requests/vacancies';
 export default function JobSearchPage() {
   return (
     <>
@@ -12,15 +11,15 @@ export default function JobSearchPage() {
           size={1116}
           mx="auto"
           py="xl"
-          style={{ display: "flex", justifyContent: "space-between", gap: 28 }}
+          style={{ display: 'flex', justifyContent: 'space-between', gap: 28 }}
         >
           <Box
             sx={(theme) => ({
-              backgroundColor: "white",
-              textAlign: "center",
+              backgroundColor: 'white',
+              textAlign: 'center',
               padding: theme.spacing.xl,
               borderRadius: theme.radius.md,
-              border: "1px solid #EAEBED",
+              border: '1px solid #EAEBED',
               width: 315,
             })}
           >
@@ -28,10 +27,10 @@ export default function JobSearchPage() {
           </Box>
           <Box
             sx={(theme) => ({
-              backgroundColor: "white",
+              backgroundColor: 'white',
               padding: theme.spacing.xl,
               borderRadius: theme.radius.md,
-              border: "1px solid #EAEBED",
+              border: '1px solid #EAEBED',
               width: 773,
             })}
           >

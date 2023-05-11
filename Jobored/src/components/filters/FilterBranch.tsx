@@ -1,6 +1,6 @@
-import { Select } from "@mantine/core";
-import { ChevronDown } from "tabler-icons-react";
-import { cataloBranches } from "../../requests/catalogBranches";
+import { Select } from '@mantine/core';
+import { ChevronDown } from 'tabler-icons-react';
+import { cataloBranches } from '../../requests/catalogBranches';
 
 export default function FilterBranch() {
   return (
@@ -13,7 +13,7 @@ export default function FilterBranch() {
       rightSection={<ChevronDown size="1.5rem" color="gray" />}
       rightSectionWidth={30}
       styles={{
-        rightSection: { pointerEvents: "none" },
+        rightSection: { pointerEvents: 'none' },
         label: { fontSize: 16, fontWeight: 700 },
       }}
       data={cataloBranches}
