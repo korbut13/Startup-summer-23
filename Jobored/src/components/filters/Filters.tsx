@@ -1,13 +1,22 @@
-import { Group, Title, Button } from '@mantine/core';
+import { Group, Title, Button, NumberInput } from '@mantine/core';
 import { CloseIcon } from './_closeIcon';
 import FilterBranch from './FilterBranch';
-import FilterSalary from './FilterSalary';
-import { vacancies } from '../../requests/vacancies';
-import { token } from '../../requests/token';
+import { useForm } from '@mantine/form';
+import { catalogBranches } from '../../requests/catalogBranches';
+import { InitialInputValues } from '../../types';
 
-export default function Filters() {
-  console.log('token', token);
-  console.log('vacancies', vacancies);
+export default function Filters({
+  sendFilters,
+}: {
+  sendFilters: (key: number, inpValues: InitialInputValues) => void;
+}) {
+  const form = useForm({
+    initialValues: {
+      title_rus: '',
+      payment_from: '',
+      payment_to: '',
+    },
+  });
   return (
     <>
       <Group style={{ justifyContent: 'space-between' }}>
@@ -18,9 +27,32 @@ export default function Filters() {
           Сбросить все
         </Button>
       </Group>
-      <form action="">
-        <FilterBranch />
-        <FilterSalary />
+      <form
+        onSubmit={form.onSubmit((values) => {
+          const selectedBranch = catalogBranches.filter(
+            (branch) => branch.value === values.title_rus
+          );
+          const branchKey = selectedBranch.length !== 0 ? selectedBranch[0].catalogues : 0;
+          sendFilters(branchKey, {
+            payment_from: values.payment_from,
+            payment_to: values.payment_to,
+          });
+        })}
+      >
+        <FilterBranch {...form.getInputProps('title_rus')} />
+        <NumberInput
+          type="number"
+          label="Оклад"
+          mb={8}
+          placeholder="от"
+          {...form.getInputProps('payment_from')}
+        ></NumberInput>
+        <NumberInput
+          type="number"
+          mb={20}
+          placeholder="до"
+          {...form.getInputProps('payment_to')}
+        ></NumberInput>
         <Button type="submit" w="100%" bg="#5E96FC" fw={500} sx={{ fontFamily: 'Inter-Regular' }}>
           Применить
         </Button>

@@ -1,10 +1,11 @@
 import { Select } from '@mantine/core';
 import { ChevronDown } from 'tabler-icons-react';
-import { cataloBranches } from '../../requests/catalogBranches';
+import { catalogBranches } from '../../requests/catalogBranches';
 
-export default function FilterBranch() {
+export default function FilterBranch(props: { value: string; onChange: () => void }) {
   return (
     <Select
+      {...props}
       mb={20}
       ta="left"
       label="Отрасль"
@@ -16,7 +17,7 @@ export default function FilterBranch() {
         rightSection: { pointerEvents: 'none' },
         label: { fontSize: 16, fontWeight: 700 },
       }}
-      data={cataloBranches}
+      data={catalogBranches}
     />
   );
 }

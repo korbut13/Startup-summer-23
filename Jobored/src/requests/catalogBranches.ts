@@ -1,5 +1,5 @@
 import { url } from '../url';
-import { CatalogBranches } from '../types';
+import { Branch } from '../types';
 
 async function getCatalogBranches(url: string) {
   return await fetch(`${url}/2.0/catalogues/`, {
@@ -9,7 +9,14 @@ async function getCatalogBranches(url: string) {
     },
   })
     .then((response) => response.json())
-    .then((response: CatalogBranches[]) => response.map((branch) => branch.title_rus));
+    .then((response: Branch[]) =>
+      response.map((branch) => {
+        return {
+          label: branch.title_rus,
+          value: branch.title_rus,
+          catalogues: branch.key,
+        };
+      })
+    );
 }
-
-export const cataloBranches = await getCatalogBranches(url);
+export const catalogBranches = await getCatalogBranches(url);

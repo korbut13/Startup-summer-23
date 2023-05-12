@@ -1,7 +1,7 @@
 import { Card, Text, Group, Button, Title, Indicator } from '@mantine/core';
 import { Star, MapPin } from 'tabler-icons-react';
 import { Vacancy } from '../../types';
-// з/п {vacancy.payment_from == "0" ? `до ${vacancy.payment_to}` : `от ${vacancy.payment_from} ${vacancy.payment_to == "0" ? `${vacancy.currency}` : `- ${vacancy.payment_to} ${vacancy.currency}`}`}
+
 function createPaymentString(paymentFrom: number, paymentTo: number, currency: string) {
   switch (paymentFrom + paymentTo) {
     case 0:
@@ -24,8 +24,9 @@ function createPaymentString(paymentFrom: number, paymentTo: number, currency: s
 export function VacancyCards({ vacancies }: { vacancies: Vacancy[] }) {
   return (
     <>
-      {vacancies.map((vacancy) => (
+      {vacancies.map((vacancy, index) => (
         <Card
+          key={index}
           style={{ border: '1px solid #EAEBED' }}
           radius="lg"
           padding="xl"

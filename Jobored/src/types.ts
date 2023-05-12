@@ -5,6 +5,7 @@ export type AuthorizationData = {
   client_secret: string;
   hr: string;
 };
+
 export type Token = {
   access_token: string;
   refresh_token: string;
@@ -12,7 +13,8 @@ export type Token = {
   expires_in: number;
   token_type: string;
 };
-export type CatalogBranches = {
+
+export type Branch = {
   title_rus: string;
   url_rus: string;
   title: string;
@@ -28,6 +30,7 @@ export type CatalogBranches = {
     }
   ];
 };
+
 export type Vacancy = {
   profession: string;
   firm_name: string;
@@ -36,4 +39,15 @@ export type Vacancy = {
   payment_to: number;
   payment_from: number;
   currency: string;
+};
+
+export type FilterInputValues = {
+  title_rus: string;
+  payment_from: string;
+  payment_to: string;
+};
+
+export type InitialInputValues = {
+  payment_from: string;
+  payment_to: string;
 };
