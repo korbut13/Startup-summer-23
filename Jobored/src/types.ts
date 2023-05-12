@@ -13,22 +13,16 @@ export type Token = {
   expires_in: number;
   token_type: string;
 };
-
 export type Branch = {
   title_rus: string;
-  url_rus: string;
   title: string;
-  title_trimmed: string;
   key: number;
-  positions: [
-    {
-      title_rus: string;
-      url_rus: string;
-      title: string;
-      id_parent: number;
-      key: number;
-    }
-  ];
+};
+
+export type BranchParams = {
+  label: string;
+  value: string;
+  catalogues: number;
 };
 
 export type Vacancy = {

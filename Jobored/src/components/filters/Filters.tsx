@@ -2,13 +2,14 @@ import { Group, Title, Button, NumberInput } from '@mantine/core';
 import { CloseIcon } from './_closeIcon';
 import FilterBranch from './FilterBranch';
 import { useForm } from '@mantine/form';
-import { catalogBranches } from '../../requests/catalogBranches';
 import { InitialInputValues } from '../../types';
+import { BranchParams } from '../../types';
 
 export default function Filters({
-  sendFilters,
+  sendFilters, catalogBranches
 }: {
   sendFilters: (key: number, inpValues: InitialInputValues) => void;
+  catalogBranches: BranchParams[];
 }) {
   const form = useForm({
     initialValues: {
@@ -39,7 +40,7 @@ export default function Filters({
           });
         })}
       >
-        <FilterBranch {...form.getInputProps('title_rus')} />
+        <FilterBranch catalogBranches={catalogBranches} {...form.getInputProps('title_rus')} />
         <NumberInput
           type="number"
           label="Оклад"

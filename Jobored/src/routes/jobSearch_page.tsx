@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Container } from '@mantine/core';
+import { Box, Container, Pagination } from '@mantine/core';
 import Filters from '../components/filters/Filters';
 import SearchInput from '../components/filters/SearchInput';
 import { VacancyCards } from '../components/vacanciesCard/VacancyCards';
@@ -8,13 +8,17 @@ import { authorizationData } from '../authorisation';
 import { token } from '../requests/token';
 import { Vacancy } from '../types';
 import { InitialInputValues } from '../types';
+import { Branch } from '../types';
+import { BranchParams } from '../types';
+
 
 function createUrlString(
   branchKey: number,
   filterInputsValues: InitialInputValues,
-  searchInputValue: string
+  searchInputValue: string,
+  activePage: number,
 ) {
-  let pathUrl = `${url}/2.0/vacancies/?`;
+  let pathUrl = `${url}/2.0/vacancies/?page=${activePage}&count=4&`;
   const vacansyParametrs = {
     catalogues: `${branchKey}`,
     payment_from: `${filterInputsValues.payment_from}`,
@@ -37,13 +41,36 @@ export default function JobSearchPage() {
     payment_from: '',
     payment_to: '',
   };
+  const [activePage, setactivePage] = React.useState(1);
+  const [amountPages, setAmountPages] = React.useState(0);
+  const [catalogBranches, setCatalogBranches] = React.useState<BranchParams[]>([]);
   const [branchKey, setBranchKey] = React.useState(0);
   const [filterInputsValues, setInputsValues] = React.useState(initialInputsValues);
   const [catalogVacancies, setCatalogVacancies] = React.useState<Vacancy[]>([]);
   const [searchInputValue, setSearchInputValue] = React.useState('');
 
   React.useEffect(() => {
-    fetch(createUrlString(branchKey, filterInputsValues, searchInputValue), {
+    fetch(`${url}/2.0/catalogues/`, {
+      method: 'GET',
+      headers: {
+        'x-secret-key': 'GEU4nvd3rej*jeh.eqp',
+      },
+    })
+      .then((response) => response.json())
+      .then((response: Branch[]) => {
+        const changedCatalogBranches = response.map((branch) => {
+          return {
+            label: branch.title_rus,
+            value: branch.title_rus,
+            catalogues: branch.key,
+          };
+        });
+        setCatalogBranches(changedCatalogBranches)
+      })
+  }, []);
+
+  React.useEffect(() => {
+    fetch(createUrlString(branchKey, filterInputsValues, searchInputValue, activePage), {
       method: 'GET',
       headers: {
         'x-secret-key': 'GEU4nvd3rej*jeh.eqp',
@@ -53,8 +80,10 @@ export default function JobSearchPage() {
       },
     })
       .then((response) => response.json())
-      .then((response: { objects: Vacancy[] }) => setCatalogVacancies(response.objects));
-  }, [branchKey, filterInputsValues, searchInputValue]);
+      .then((response: { objects: Vacancy[], total: number }) => { setAmountPages(response.total); setCatalogVacancies(response.objects) });
+
+  }, [branchKey, filterInputsValues, searchInputValue, activePage]);
+
   return (
     <>
       {
@@ -71,7 +100,7 @@ export default function JobSearchPage() {
               padding: theme.spacing.xl,
               borderRadius: theme.radius.md,
               border: '1px solid #EAEBED',
-              width: 315,
+              width: "25%",
               maxHeight: 400,
             })}
           >
@@ -80,28 +109,20 @@ export default function JobSearchPage() {
                 setBranchKey(key);
                 setInputsValues(inpValues);
               }}
+              catalogBranches={catalogBranches}
             />
           </Box>
-          <Box
-            sx={(theme) => ({
-              backgroundColor: 'white',
-              padding: theme.spacing.xl,
-              borderRadius: theme.radius.md,
-              border: '1px solid #EAEBED',
-              width: 773,
-            })}
-          >
+          <Box w="75%">
             <SearchInput
               changedSearchInpValue={(changedSearchInpValue: string) =>
                 setSearchInputValue(changedSearchInpValue)
               }
             />
             <VacancyCards vacancies={catalogVacancies} />
+            <Pagination total={amountPages} value={activePage} onChange={setactivePage} />
           </Box>
         </Container>
       }
     </>
   );
 }
-
-//setSearchInputValue((event.target as HTMLInputElement).value)

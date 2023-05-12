@@ -1,11 +1,12 @@
 import { Select } from '@mantine/core';
 import { ChevronDown } from 'tabler-icons-react';
-import { catalogBranches } from '../../requests/catalogBranches';
+import { BranchParams } from '../../types';
 
-export default function FilterBranch(props: { value: string; onChange: () => void }) {
+export default function FilterBranch({ catalogBranches, value, onChange }: { catalogBranches: BranchParams[], value: string; onChange: () => void }) {
   return (
     <Select
-      {...props}
+      value={value}
+      onChange={onChange}
       mb={20}
       ta="left"
       label="Отрасль"
