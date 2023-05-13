@@ -1,13 +1,16 @@
+import React from 'react';
 import { Input, Button, Group } from '@mantine/core';
-import { useInputState } from '@mantine/hooks';
 import { Search } from 'tabler-icons-react';
 
 export default function SearchInput({
-  changedSearchInpValue,
+  value,
+  onChange,
+  sendFilters
 }: {
-  changedSearchInpValue: (changedSearchInpValue: string) => void;
+  value: string,
+  onChange: (event: React.ChangeEvent) => void,
+  sendFilters: () => void
 }) {
-  const [searchInputValue, setSearchInputValue] = useInputState('');
   return (
     <>
       <Group mb={16}>
@@ -17,11 +20,11 @@ export default function SearchInput({
             placeholder="Введите название вакансии"
             radius="md"
             width="100%"
-            value={searchInputValue}
-            onChange={setSearchInputValue}
+            value={value}
+            onChange={onChange}
           />
         </Input.Wrapper>
-        <Button onClick={() => changedSearchInpValue(searchInputValue)}>Поиск</Button>
+        <Button onClick={sendFilters}>Поиск</Button>
       </Group>
     </>
   );

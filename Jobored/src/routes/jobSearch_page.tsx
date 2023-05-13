@@ -2,52 +2,69 @@ import React from 'react';
 import { Box, Container, Pagination } from '@mantine/core';
 import Filters from '../components/filters/Filters';
 import SearchInput from '../components/filters/SearchInput';
-import { VacancyCards } from '../components/vacanciesCard/VacancyCards';
+import { VacancyCards } from '../components/vacanciesCards/VacancyCards';
 import { url } from '../url';
 import { authorizationData } from '../authorisation';
 import { token } from '../requests/token';
-import { Vacancy } from '../types';
+import createUrlString from '../utils/createUrlString';
 import { InitialInputValues } from '../types';
 import { Branch } from '../types';
 import { BranchParams } from '../types';
-
-
-function createUrlString(
-  branchKey: number,
-  filterInputsValues: InitialInputValues,
-  searchInputValue: string,
-  activePage: number,
-) {
-  let pathUrl = `${url}/2.0/vacancies/?page=${activePage}&count=4&`;
-  const vacansyParametrs = {
-    catalogues: `${branchKey}`,
-    payment_from: `${filterInputsValues.payment_from}`,
-    payment_to: `${filterInputsValues.payment_to}`,
-    keyword: searchInputValue,
-  };
-  for (const key in vacansyParametrs) {
-    if (
-      vacansyParametrs[key as keyof typeof vacansyParametrs] &&
-      vacansyParametrs[key as keyof typeof vacansyParametrs] != '0'
-    ) {
-      pathUrl = pathUrl + `${key}=${vacansyParametrs[key as keyof typeof vacansyParametrs]}&`;
-    } else pathUrl;
-  }
-  return pathUrl.slice(0, -1);
-}
+import { Vacancy } from '../types';
 
 export default function JobSearchPage() {
-  const initialInputsValues = {
+  const initialInputValues = {
+    searchInputValue: '',
     payment_from: '',
     payment_to: '',
+    branchName: '',
   };
+  const initialDataFilters = {
+    published: '1',
+    keyword: '',
+    payment_from: '',
+    payment_to: '',
+    catalogues: '',
+  }
   const [activePage, setactivePage] = React.useState(1);
   const [amountPages, setAmountPages] = React.useState(0);
   const [catalogBranches, setCatalogBranches] = React.useState<BranchParams[]>([]);
-  const [branchKey, setBranchKey] = React.useState(0);
-  const [filterInputsValues, setInputsValues] = React.useState(initialInputsValues);
   const [catalogVacancies, setCatalogVacancies] = React.useState<Vacancy[]>([]);
-  const [searchInputValue, setSearchInputValue] = React.useState('');
+  const [inputValues, setInputValues] = React.useState<InitialInputValues>(initialInputValues);
+  const [dataFilters, setDataFilters] = React.useState(initialDataFilters);
+
+  const sendFilters = () => {
+    const selectedBranch = catalogBranches.filter(
+      (branch) => branch.value === inputValues.branchName
+    );
+    const branchKey = selectedBranch.length !== 0 ? selectedBranch[0].catalogues : 0;
+    setDataFilters((prevState) => ({
+      ...prevState,
+      keyword: inputValues.searchInputValue,
+      payment_from: inputValues.payment_from,
+      payment_to: inputValues.payment_to,
+      catalogues: branchKey.toString(),
+    }))
+    setactivePage(1)
+  }
+
+  const setNewValues = (valueName: string | number, keyName: string) => {
+    setInputValues((prevState) => {
+      let tempState: InitialInputValues = {
+        searchInputValue: '',
+        payment_from: '',
+        payment_to: '',
+        branchName: ''
+      }
+      for (const [key, value] of Object.entries(prevState)) {
+        if (key !== keyName) {
+          tempState[key as keyof typeof tempState] = value
+        }
+        tempState[keyName as keyof typeof tempState] = valueName.toString()
+      }
+      return tempState
+    })
+  }
 
   React.useEffect(() => {
     fetch(`${url}/2.0/catalogues/`, {
@@ -70,7 +87,8 @@ export default function JobSearchPage() {
   }, []);
 
   React.useEffect(() => {
-    fetch(createUrlString(branchKey, filterInputsValues, searchInputValue, activePage), {
+
+    fetch(createUrlString(dataFilters, activePage), {
       method: 'GET',
       headers: {
         'x-secret-key': 'GEU4nvd3rej*jeh.eqp',
@@ -80,9 +98,14 @@ export default function JobSearchPage() {
       },
     })
       .then((response) => response.json())
-      .then((response: { objects: Vacancy[], total: number }) => { setAmountPages(response.total); setCatalogVacancies(response.objects) });
+      .then((response: { objects: Vacancy[], total: number }) => {
+        setAmountPages(response.total > 500 ? 125 : Math.ceil(response.total / 4));
+        setCatalogVacancies(response.objects);
+        console.log(response.total)
+        console.log(response.objects.length)
+      });
 
-  }, [branchKey, filterInputsValues, searchInputValue, activePage]);
+  }, [dataFilters, activePage]);
 
   return (
     <>
@@ -105,18 +128,31 @@ export default function JobSearchPage() {
             })}
           >
             <Filters
-              sendFilters={(key: number, inpValues: InitialInputValues) => {
-                setBranchKey(key);
-                setInputsValues(inpValues);
-              }}
               catalogBranches={catalogBranches}
+              branchName={inputValues.branchName}
+
+              onChangeBranch={(value: string) => setNewValues(value, "branchName")}
+
+              paymentFromValue={inputValues.payment_from}
+
+              onChangePaymentFrom={(value: number) => setNewValues(value, "payment_from")}
+              paymentToValue={inputValues.payment_to}
+
+              onChangePaymentTo={(value: number) => setNewValues(value, "payment_to")}
+              sendFilters={sendFilters}
             />
           </Box>
           <Box w="75%">
             <SearchInput
-              changedSearchInpValue={(changedSearchInpValue: string) =>
-                setSearchInputValue(changedSearchInpValue)
-              }
+              value={inputValues.searchInputValue}
+              onChange={(event: React.ChangeEvent) => {
+                setInputValues((prevState) => ({
+                  ...prevState,
+                  searchInputValue: (event.target as HTMLInputElement).value
+                }))
+
+              }}
+              sendFilters={sendFilters}
             />
             <VacancyCards vacancies={catalogVacancies} />
             <Pagination total={amountPages} value={activePage} onChange={setactivePage} />
@@ -126,3 +162,7 @@ export default function JobSearchPage() {
     </>
   );
 }
+
+
+
+// Главное добавить параметр no_agreement=1, и тогда вакансии будут приходить корректно

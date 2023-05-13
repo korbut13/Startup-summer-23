@@ -41,7 +41,16 @@ export type FilterInputValues = {
   payment_to: string;
 };
 
-export type InitialInputValues = {
+export type InitialDataFilters = {
+  published: string;
+  keyword: string;
   payment_from: string;
   payment_to: string;
-};
+  catalogues: string;
+}
+export type InitialInputValues = {
+  searchInputValue: string;
+  payment_from: string;
+  payment_to: string;
+  branchName: string;
+}

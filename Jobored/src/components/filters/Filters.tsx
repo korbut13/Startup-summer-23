@@ -6,18 +6,17 @@ import { InitialInputValues } from '../../types';
 import { BranchParams } from '../../types';
 
 export default function Filters({
-  sendFilters, catalogBranches
-}: {
-  sendFilters: (key: number, inpValues: InitialInputValues) => void;
-  catalogBranches: BranchParams[];
-}) {
-  const form = useForm({
-    initialValues: {
-      title_rus: '',
-      payment_from: '',
-      payment_to: '',
-    },
-  });
+  catalogBranches, branchName, onChangeBranch, paymentFromValue, onChangePaymentFrom, paymentToValue, onChangePaymentTo, sendFilters }: {
+    catalogBranches: BranchParams[],
+    branchName: string,
+    onChangeBranch: (value: string) => void,
+    paymentFromValue: string,
+    onChangePaymentFrom: (value: number) => void,
+    paymentToValue: string,
+    onChangePaymentTo: (value: number) => void,
+    sendFilters: () => void,
+  }) {
+
   return (
     <>
       <Group style={{ justifyContent: 'space-between' }}>
@@ -28,36 +27,29 @@ export default function Filters({
           Сбросить все
         </Button>
       </Group>
-      <form
-        onSubmit={form.onSubmit((values) => {
-          const selectedBranch = catalogBranches.filter(
-            (branch) => branch.value === values.title_rus
-          );
-          const branchKey = selectedBranch.length !== 0 ? selectedBranch[0].catalogues : 0;
-          sendFilters(branchKey, {
-            payment_from: values.payment_from,
-            payment_to: values.payment_to,
-          });
-        })}
-      >
-        <FilterBranch catalogBranches={catalogBranches} {...form.getInputProps('title_rus')} />
-        <NumberInput
-          type="number"
-          label="Оклад"
-          mb={8}
-          placeholder="от"
-          {...form.getInputProps('payment_from')}
-        ></NumberInput>
-        <NumberInput
-          type="number"
-          mb={20}
-          placeholder="до"
-          {...form.getInputProps('payment_to')}
-        ></NumberInput>
-        <Button type="submit" w="100%" bg="#5E96FC" fw={500} sx={{ fontFamily: 'Inter-Regular' }}>
-          Применить
-        </Button>
-      </form>
+      <FilterBranch
+        catalogBranches={catalogBranches}
+        value={branchName}
+        onChangeBranch={onChangeBranch}
+      />
+      <NumberInput
+        type="number"
+        label="Оклад"
+        mb={8}
+        placeholder="от"
+        value={paymentFromValue.length === 0 ? '' : +paymentFromValue}
+        onChange={onChangePaymentFrom}
+      ></NumberInput>
+      <NumberInput
+        type="number"
+        mb={20}
+        placeholder="до"
+        value={paymentToValue.length === 0 ? '' : +paymentToValue}
+        onChange={onChangePaymentTo}
+      ></NumberInput>
+      <Button type="submit" w="100%" bg="#5E96FC" fw={500} sx={{ fontFamily: 'Inter-Regular' }} onClick={sendFilters}>
+        Применить
+      </Button>
     </>
   );
 }

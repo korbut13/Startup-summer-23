@@ -1,5 +1,5 @@
 import { Container } from '@mantine/core';
-export default function SelectedVacanciesPage() {
+export default function FavoritesVacanciesPage() {
   return (
     <Container
       size={1116}

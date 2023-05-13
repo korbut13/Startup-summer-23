@@ -5,7 +5,7 @@ import Root from './routes/Root';
 import './index.css';
 import JobSearchPage from './routes/jobSearch_page';
 import ErrorPage from './routes/error-page';
-import SelectedVacanciesPage from './routes/selected_page';
+import FavoritesVacanciesPage from './routes/favorites_page';
 
 const router = createBrowserRouter([
   {
@@ -18,8 +18,8 @@ const router = createBrowserRouter([
         element: <JobSearchPage />,
       },
       {
-        path: 'selected',
-        element: <SelectedVacanciesPage />,
+        path: 'favorites',
+        element: <FavoritesVacanciesPage />,
       },
     ],
   },

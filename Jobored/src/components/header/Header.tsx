@@ -5,7 +5,7 @@ import { Logo } from './_logo';
 
 const dataLinks = [
   { label: 'Поиск вакансий', path: '/' },
-  { label: 'Избранное', path: '/selected' },
+  { label: 'Избранное', path: '/favorites' },
 ];
 
 export default function HeaderComponent() {
