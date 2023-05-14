@@ -2,7 +2,7 @@ import React from 'react';
 import { Box, Container, Pagination } from '@mantine/core';
 import Filters from '../components/filters/Filters';
 import SearchInput from '../components/filters/SearchInput';
-import { VacancyCards } from '../components/vacanciesCards/VacancyCards';
+import { VacancyCard } from '../components/vacanciesCards/VacancyCard';
 import { url } from '../url';
 import { authorizationData } from '../authorisation';
 import { token } from '../requests/token';
@@ -32,6 +32,7 @@ export default function JobSearchPage() {
   const [catalogVacancies, setCatalogVacancies] = React.useState<Vacancy[]>([]);
   const [inputValues, setInputValues] = React.useState<InitialInputValues>(initialInputValues);
   const [dataFilters, setDataFilters] = React.useState(initialDataFilters);
+  const [favorite, setFavorite] = React.useState<number[]>([]);
 
   const sendFilters = () => {
     const selectedBranch = catalogBranches.filter(
@@ -77,8 +78,8 @@ export default function JobSearchPage() {
       .then((response: Branch[]) => {
         const changedCatalogBranches = response.map((branch) => {
           return {
-            label: branch.title_rus,
-            value: branch.title_rus,
+            label: branch.title_trimmed,
+            value: branch.title_trimmed,
             catalogues: branch.key,
           };
         });
@@ -87,7 +88,6 @@ export default function JobSearchPage() {
   }, []);
 
   React.useEffect(() => {
-
     fetch(createUrlString(dataFilters, activePage), {
       method: 'GET',
       headers: {
@@ -99,10 +99,8 @@ export default function JobSearchPage() {
     })
       .then((response) => response.json())
       .then((response: { objects: Vacancy[], total: number }) => {
-        setAmountPages(response.total > 500 ? 125 : Math.ceil(response.total / 4));
+        setAmountPages(response.total > 500 ? 125 : Math.ceil((response.total - 4) / 4));
         setCatalogVacancies(response.objects);
-        console.log(response.total)
-        console.log(response.objects.length)
       });
 
   }, [dataFilters, activePage]);
@@ -142,7 +140,7 @@ export default function JobSearchPage() {
               sendFilters={sendFilters}
             />
           </Box>
-          <Box w="75%">
+          <Box w="75%" >
             <SearchInput
               value={inputValues.searchInputValue}
               onChange={(event: React.ChangeEvent) => {
@@ -154,7 +152,27 @@ export default function JobSearchPage() {
               }}
               sendFilters={sendFilters}
             />
-            <VacancyCards vacancies={catalogVacancies} />
+            {catalogVacancies.map((vacancy: Vacancy, index: number) => <VacancyCard key={index} vacancy={vacancy} changeFavorite={(id: number) => {
+              if (localStorage.getItem("favoriteVacancies") !== null) {
+                const indexFavVacancy = JSON.parse(localStorage.getItem("favoriteVacancies")!).indexOf(id);
+                if (indexFavVacancy === -1) {
+                  const arr = JSON.parse(localStorage.getItem("favoriteVacancies")!);
+                  arr.push(id);
+                  localStorage.setItem("favoriteVacancies", JSON.stringify(arr));
+                  setFavorite(JSON.parse(localStorage.getItem("favoriteVacancies")!));
+
+                } else {
+                  const arr = JSON.parse(localStorage.getItem("favoriteVacancies")!);
+                  arr.splice(indexFavVacancy, 1);
+                  localStorage.setItem("favoriteVacancies", JSON.stringify(arr));
+                  setFavorite(JSON.parse(localStorage.getItem("favoriteVacancies")!));
+                }
+
+              } else {
+                localStorage.setItem("favoriteVacancies", JSON.stringify([id]));
+                setFavorite((prev) => [...prev, id]);
+              }
+            }} />)}
             <Pagination total={amountPages} value={activePage} onChange={setactivePage} />
           </Box>
         </Container>
@@ -162,7 +180,3 @@ export default function JobSearchPage() {
     </>
   );
 }
-
-
-
-// Главное добавить параметр no_agreement=1, и тогда вакансии будут приходить корректно

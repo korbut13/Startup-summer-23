@@ -15,7 +15,7 @@ export type Token = {
 };
 export type Branch = {
   title_rus: string;
-  title: string;
+  title_trimmed: string;
   key: number;
 };
 
@@ -26,6 +26,7 @@ export type BranchParams = {
 };
 
 export type Vacancy = {
+  id: number,
   profession: string;
   firm_name: string;
   town: { id: number; title: string };
@@ -33,6 +34,7 @@ export type Vacancy = {
   payment_to: number;
   payment_from: number;
   currency: string;
+  vacancyRichText: string
 };
 
 export type FilterInputValues = {
