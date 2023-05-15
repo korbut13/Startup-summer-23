@@ -2,7 +2,7 @@ import React from 'react';
 import { Box, Container, Pagination } from '@mantine/core';
 import Filters from '../components/filters/Filters';
 import SearchInput from '../components/filters/SearchInput';
-import { VacancyCard } from '../components/vacanciesCards/VacancyCard';
+import { VacancyCard } from '../components/vacancyCard/VacancyCard';
 import { url } from '../url';
 import { authorizationData } from '../authorisation';
 import { token } from '../requests/token';
@@ -32,7 +32,7 @@ export default function JobSearchPage() {
   const [catalogVacancies, setCatalogVacancies] = React.useState<Vacancy[]>([]);
   const [inputValues, setInputValues] = React.useState<InitialInputValues>(initialInputValues);
   const [dataFilters, setDataFilters] = React.useState(initialDataFilters);
-  const [favorite, setFavorite] = React.useState<number[]>([]);
+  const [favorite, setFavorite] = React.useState<number[]>(JSON.parse(localStorage.getItem("favoriteVacancies") || '[]'));
 
   const sendFilters = () => {
     const selectedBranch = catalogBranches.filter(
@@ -148,30 +148,20 @@ export default function JobSearchPage() {
                   ...prevState,
                   searchInputValue: (event.target as HTMLInputElement).value
                 }))
-
               }}
               sendFilters={sendFilters}
             />
-            {catalogVacancies.map((vacancy: Vacancy, index: number) => <VacancyCard key={index} vacancy={vacancy} changeFavorite={(id: number) => {
-              if (localStorage.getItem("favoriteVacancies") !== null) {
-                const indexFavVacancy = JSON.parse(localStorage.getItem("favoriteVacancies")!).indexOf(id);
-                if (indexFavVacancy === -1) {
-                  const arr = JSON.parse(localStorage.getItem("favoriteVacancies")!);
-                  arr.push(id);
-                  localStorage.setItem("favoriteVacancies", JSON.stringify(arr));
-                  setFavorite(JSON.parse(localStorage.getItem("favoriteVacancies")!));
-
-                } else {
-                  const arr = JSON.parse(localStorage.getItem("favoriteVacancies")!);
-                  arr.splice(indexFavVacancy, 1);
-                  localStorage.setItem("favoriteVacancies", JSON.stringify(arr));
-                  setFavorite(JSON.parse(localStorage.getItem("favoriteVacancies")!));
-                }
-
+            {catalogVacancies.map((vacancy: Vacancy, index: number) => <VacancyCard key={index} vacancy={vacancy} favoriteVacancies={favorite} changeFavorite={(id: number) => {
+              const index = favorite.indexOf(id);
+              let nextState: number[] = [];
+              if (index === -1) {
+                nextState = [...favorite, id];
               } else {
-                localStorage.setItem("favoriteVacancies", JSON.stringify([id]));
-                setFavorite((prev) => [...prev, id]);
+                nextState = favorite.filter((f) => f !== id);
               }
+              setFavorite(nextState);
+              localStorage.setItem("favoriteVacancies", JSON.stringify(nextState));
+
             }} />)}
             <Pagination total={amountPages} value={activePage} onChange={setactivePage} />
           </Box>
