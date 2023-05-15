@@ -1,8 +1,6 @@
 import { Group, Title, Button, NumberInput } from '@mantine/core';
 import { CloseIcon } from './_closeIcon';
 import FilterBranch from './FilterBranch';
-import { useForm } from '@mantine/form';
-import { InitialInputValues } from '../../types';
 import { BranchParams } from '../../types';
 
 export default function Filters({
@@ -33,12 +31,16 @@ export default function Filters({
         onChangeBranch={onChangeBranch}
       />
       <NumberInput
+        ta="start"
         type="number"
         label="Оклад"
         mb={8}
         placeholder="от"
         value={paymentFromValue.length === 0 ? '' : +paymentFromValue}
         onChange={onChangePaymentFrom}
+        styles={{
+          label: { fontSize: 16, fontWeight: 700 },
+        }}
       ></NumberInput>
       <NumberInput
         type="number"

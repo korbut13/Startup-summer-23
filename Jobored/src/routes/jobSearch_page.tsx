@@ -163,7 +163,7 @@ export default function JobSearchPage() {
               localStorage.setItem("favoriteVacancies", JSON.stringify(nextState));
 
             }} />)}
-            <Pagination total={amountPages} value={activePage} onChange={setactivePage} />
+            <Pagination total={amountPages} value={activePage} onChange={setactivePage} style={{ justifyContent: "center" }} />
           </Box>
         </Container>
       }
