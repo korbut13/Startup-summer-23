@@ -2,10 +2,14 @@ import { Select } from '@mantine/core';
 import { ChevronDown } from 'tabler-icons-react';
 import { BranchParams } from '../../types';
 
-export default function FilterBranch({ catalogBranches, value, onChangeBranch }: {
-  catalogBranches: BranchParams[],
-  value: string,
-  onChangeBranch: (value: string) => void,
+export default function FilterBranch({
+  catalogBranches,
+  value,
+  onChangeBranch,
+}: {
+  catalogBranches: BranchParams[];
+  value: string;
+  onChangeBranch: (value: string) => void;
 }) {
   return (
     <Select

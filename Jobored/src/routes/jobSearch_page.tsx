@@ -25,14 +25,16 @@ export default function JobSearchPage() {
     payment_from: '',
     payment_to: '',
     catalogues: '',
-  }
+  };
   const [activePage, setactivePage] = React.useState(1);
   const [amountPages, setAmountPages] = React.useState(0);
   const [catalogBranches, setCatalogBranches] = React.useState<BranchParams[]>([]);
   const [catalogVacancies, setCatalogVacancies] = React.useState<Vacancy[]>([]);
   const [inputValues, setInputValues] = React.useState<InitialInputValues>(initialInputValues);
   const [dataFilters, setDataFilters] = React.useState(initialDataFilters);
-  const [favorite, setFavorite] = React.useState<number[]>(JSON.parse(localStorage.getItem("favoriteVacancies") || '[]'));
+  const [favorite, setFavorite] = React.useState<number[]>(
+    JSON.parse(localStorage.getItem('favoriteVacancies') || '[]')
+  );
 
   const sendFilters = () => {
     const selectedBranch = catalogBranches.filter(
@@ -45,27 +47,27 @@ export default function JobSearchPage() {
       payment_from: inputValues.payment_from,
       payment_to: inputValues.payment_to,
       catalogues: branchKey.toString(),
-    }))
-    setactivePage(1)
-  }
+    }));
+    setactivePage(1);
+  };
 
   const setNewValues = (valueName: string | number, keyName: string) => {
     setInputValues((prevState) => {
-      let tempState: InitialInputValues = {
+      const tempState: InitialInputValues = {
         searchInputValue: '',
         payment_from: '',
         payment_to: '',
-        branchName: ''
-      }
+        branchName: '',
+      };
       for (const [key, value] of Object.entries(prevState)) {
         if (key !== keyName) {
-          tempState[key as keyof typeof tempState] = value
+          tempState[key as keyof typeof tempState] = value;
         }
-        tempState[keyName as keyof typeof tempState] = valueName.toString()
+        tempState[keyName as keyof typeof tempState] = valueName.toString();
       }
-      return tempState
-    })
-  }
+      return tempState;
+    });
+  };
   React.useEffect(() => {
     fetch(`${url}/2.0/catalogues/`, {
       method: 'GET',
@@ -82,8 +84,8 @@ export default function JobSearchPage() {
             catalogues: branch.key,
           };
         });
-        setCatalogBranches(changedCatalogBranches)
-      })
+        setCatalogBranches(changedCatalogBranches);
+      });
   }, []);
 
   React.useEffect(() => {
@@ -97,11 +99,10 @@ export default function JobSearchPage() {
       },
     })
       .then((response) => response.json())
-      .then((response: { objects: Vacancy[], total: number }) => {
+      .then((response: { objects: Vacancy[]; total: number }) => {
         setAmountPages(response.total > 500 ? 125 : Math.ceil(response.total / 4));
         setCatalogVacancies(response.objects);
       });
-
   }, [dataFilters, activePage]);
 
   return (
@@ -120,54 +121,60 @@ export default function JobSearchPage() {
               padding: theme.spacing.xl,
               borderRadius: theme.radius.md,
               border: '1px solid #EAEBED',
-              width: "25%",
+              width: '25%',
               maxHeight: 400,
             })}
           >
             <Filters
               catalogBranches={catalogBranches}
               branchName={inputValues.branchName}
-
-              onChangeBranch={(value: string) => setNewValues(value, "branchName")}
-
+              onChangeBranch={(value: string) => setNewValues(value, 'branchName')}
               paymentFromValue={inputValues.payment_from}
-
-              onChangePaymentFrom={(value: number) => setNewValues(value, "payment_from")}
+              onChangePaymentFrom={(value: number) => setNewValues(value, 'payment_from')}
               paymentToValue={inputValues.payment_to}
-
-              onChangePaymentTo={(value: number) => setNewValues(value, "payment_to")}
+              onChangePaymentTo={(value: number) => setNewValues(value, 'payment_to')}
               sendFilters={sendFilters}
               clearFilters={() => {
-                setInputValues(initialInputValues)
-                setDataFilters(initialDataFilters)
-              }
-              }
+                setInputValues(initialInputValues);
+                setDataFilters(initialDataFilters);
+              }}
             />
           </Box>
-          <Box w="75%" >
+          <Box w="75%">
             <SearchInput
               value={inputValues.searchInputValue}
               onChange={(event: React.ChangeEvent) => {
                 setInputValues((prevState) => ({
                   ...prevState,
-                  searchInputValue: (event.target as HTMLInputElement).value
-                }))
+                  searchInputValue: (event.target as HTMLInputElement).value,
+                }));
               }}
               sendFilters={sendFilters}
             />
-            {catalogVacancies.map((vacancy: Vacancy, index: number) => <VacancyCard key={index} vacancy={vacancy} favoriteVacancies={favorite} changeFavorite={(id: number) => {
-              const index = favorite.indexOf(id);
-              let nextState: number[] = [];
-              if (index === -1) {
-                nextState = [...favorite, id];
-              } else {
-                nextState = favorite.filter((f) => f !== id);
-              }
-              setFavorite(nextState);
-              localStorage.setItem("favoriteVacancies", JSON.stringify(nextState));
-
-            }} />)}
-            <Pagination total={amountPages} value={activePage} onChange={setactivePage} style={{ justifyContent: "center" }} />
+            {catalogVacancies.map((vacancy: Vacancy, index: number) => (
+              <VacancyCard
+                key={index}
+                vacancy={vacancy}
+                favoriteVacancies={favorite}
+                changeFavorite={(id: number) => {
+                  const index = favorite.indexOf(id);
+                  let nextState: number[] = [];
+                  if (index === -1) {
+                    nextState = [...favorite, id];
+                  } else {
+                    nextState = favorite.filter((f) => f !== id);
+                  }
+                  setFavorite(nextState);
+                  localStorage.setItem('favoriteVacancies', JSON.stringify(nextState));
+                }}
+              />
+            ))}
+            <Pagination
+              total={amountPages}
+              value={activePage}
+              onChange={setactivePage}
+              style={{ justifyContent: 'center' }}
+            />
           </Box>
         </Container>
       }

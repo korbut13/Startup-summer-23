@@ -5,11 +5,11 @@ import { Search } from 'tabler-icons-react';
 export default function SearchInput({
   value,
   onChange,
-  sendFilters
+  sendFilters,
 }: {
-  value: string,
-  onChange: (event: React.ChangeEvent) => void,
-  sendFilters: () => void
+  value: string;
+  onChange: (event: React.ChangeEvent) => void;
+  sendFilters: () => void;
 }) {
   return (
     <>

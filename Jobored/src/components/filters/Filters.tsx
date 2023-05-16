@@ -4,18 +4,26 @@ import FilterBranch from './FilterBranch';
 import { BranchParams } from '../../types';
 
 export default function Filters({
-  catalogBranches, branchName, onChangeBranch, paymentFromValue, onChangePaymentFrom, paymentToValue, onChangePaymentTo, sendFilters, clearFilters }: {
-    catalogBranches: BranchParams[],
-    branchName: string,
-    onChangeBranch: (value: string) => void,
-    paymentFromValue: string,
-    onChangePaymentFrom: (value: number) => void,
-    paymentToValue: string,
-    onChangePaymentTo: (value: number) => void,
-    sendFilters: () => void,
-    clearFilters: () => void,
-  }) {
-
+  catalogBranches,
+  branchName,
+  onChangeBranch,
+  paymentFromValue,
+  onChangePaymentFrom,
+  paymentToValue,
+  onChangePaymentTo,
+  sendFilters,
+  clearFilters,
+}: {
+  catalogBranches: BranchParams[];
+  branchName: string;
+  onChangeBranch: (value: string) => void;
+  paymentFromValue: string;
+  onChangePaymentFrom: (value: number) => void;
+  paymentToValue: string;
+  onChangePaymentTo: (value: number) => void;
+  sendFilters: () => void;
+  clearFilters: () => void;
+}) {
   return (
     <>
       <Group style={{ justifyContent: 'space-between' }}>
@@ -50,7 +58,14 @@ export default function Filters({
         value={paymentToValue.length === 0 ? '' : +paymentToValue}
         onChange={onChangePaymentTo}
       ></NumberInput>
-      <Button type="submit" w="100%" bg="#5E96FC" fw={500} sx={{ fontFamily: 'Inter-Regular' }} onClick={sendFilters}>
+      <Button
+        type="submit"
+        w="100%"
+        bg="#5E96FC"
+        fw={500}
+        sx={{ fontFamily: 'Inter-Regular' }}
+        onClick={sendFilters}
+      >
         Применить
       </Button>
     </>

@@ -26,7 +26,7 @@ export type BranchParams = {
 };
 
 export type Vacancy = {
-  id: number,
+  id: number;
   profession: string;
   firm_name: string;
   town: { id: number; title: string };
@@ -34,7 +34,7 @@ export type Vacancy = {
   payment_to: number;
   payment_from: number;
   currency: string;
-  vacancyRichText: string
+  vacancyRichText: string;
 };
 
 export type FilterInputValues = {
@@ -49,10 +49,11 @@ export type InitialDataFilters = {
   payment_from: string;
   payment_to: string;
   catalogues: string;
-}
+};
+
 export type InitialInputValues = {
   searchInputValue: string;
   payment_from: string;
   payment_to: string;
   branchName: string;
-}
+};
