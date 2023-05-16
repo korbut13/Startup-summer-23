@@ -11,6 +11,11 @@ export async function getToken(url: string, authorData: AuthorizationData) {
     },
   })
     .then((response) => response.json())
-    .then((token: Token) => token.access_token);
+    .then((token: Token) => {
+      localStorage.setItem("access_token", token.access_token);
+      return token.access_token;
+    })
 }
-export const token = await getToken(url, authorizationData);
+export const token = localStorage.getItem("access_token") ? localStorage.getItem("access_token") : await getToken(url, authorizationData);
+
+//v3.r.137440105.13e615b769a61b3d792d420aad1a87d2ce0fd5b9.764f086b992c92a640f5a4f3f4f9e771addef41e

@@ -4,7 +4,7 @@ import FilterBranch from './FilterBranch';
 import { BranchParams } from '../../types';
 
 export default function Filters({
-  catalogBranches, branchName, onChangeBranch, paymentFromValue, onChangePaymentFrom, paymentToValue, onChangePaymentTo, sendFilters }: {
+  catalogBranches, branchName, onChangeBranch, paymentFromValue, onChangePaymentFrom, paymentToValue, onChangePaymentTo, sendFilters, clearFilters }: {
     catalogBranches: BranchParams[],
     branchName: string,
     onChangeBranch: (value: string) => void,
@@ -13,6 +13,7 @@ export default function Filters({
     paymentToValue: string,
     onChangePaymentTo: (value: number) => void,
     sendFilters: () => void,
+    clearFilters: () => void,
   }) {
 
   return (
@@ -21,7 +22,7 @@ export default function Filters({
         <Title order={3} fz="lg">
           Фильтры
         </Title>
-        <Button color="gray.5" rightIcon={<CloseIcon />} variant="white">
+        <Button onClick={clearFilters} color="gray.5" rightIcon={<CloseIcon />} variant="white">
           Сбросить все
         </Button>
       </Group>

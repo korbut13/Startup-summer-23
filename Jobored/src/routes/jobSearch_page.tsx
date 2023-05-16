@@ -66,7 +66,6 @@ export default function JobSearchPage() {
       return tempState
     })
   }
-
   React.useEffect(() => {
     fetch(`${url}/2.0/catalogues/`, {
       method: 'GET',
@@ -99,7 +98,7 @@ export default function JobSearchPage() {
     })
       .then((response) => response.json())
       .then((response: { objects: Vacancy[], total: number }) => {
-        setAmountPages(response.total > 500 ? 125 : Math.ceil((response.total - 4) / 4));
+        setAmountPages(response.total > 500 ? 125 : Math.ceil(response.total / 4));
         setCatalogVacancies(response.objects);
       });
 
@@ -138,6 +137,11 @@ export default function JobSearchPage() {
 
               onChangePaymentTo={(value: number) => setNewValues(value, "payment_to")}
               sendFilters={sendFilters}
+              clearFilters={() => {
+                setInputValues(initialInputValues)
+                setDataFilters(initialDataFilters)
+              }
+              }
             />
           </Box>
           <Box w="75%" >
