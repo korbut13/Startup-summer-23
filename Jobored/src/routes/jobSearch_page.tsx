@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Container, Pagination } from '@mantine/core';
+import { Box, Container, Pagination, Title } from '@mantine/core';
 import Filters from '../components/filters/Filters';
 import SearchInput from '../components/filters/SearchInput';
 import { VacancyCard } from '../components/vacancyCard/VacancyCard';
@@ -151,30 +151,56 @@ export default function JobSearchPage() {
               }}
               sendFilters={sendFilters}
             />
-            {catalogVacancies.map((vacancy: Vacancy, index: number) => (
-              <VacancyCard
-                key={index}
-                vacancy={vacancy}
-                favoriteVacancies={favorite}
-                changeFavorite={(id: number) => {
-                  const index = favorite.indexOf(id);
-                  let nextState: number[] = [];
-                  if (index === -1) {
-                    nextState = [...favorite, id];
-                  } else {
-                    nextState = favorite.filter((f) => f !== id);
-                  }
-                  setFavorite(nextState);
-                  localStorage.setItem('favoriteVacancies', JSON.stringify(nextState));
+            {catalogVacancies.length === 0 ? (
+              <Title
+                order={2}
+                fz="lg"
+                h={300}
+                sx={{
+                  fontFamily: 'Inter-Regular',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
                 }}
+              >
+                Вакансии не найдены
+              </Title>
+            ) : (
+              catalogVacancies.map((vacancy: Vacancy, index: number) => (
+                <VacancyCard
+                  key={index}
+                  vacancy={vacancy}
+                  favoriteVacancies={favorite}
+                  changeFavorite={(id: number) => {
+                    const index = favorite.indexOf(id);
+                    let nextState: number[] = [];
+                    if (index === -1) {
+                      nextState = [...favorite, id];
+                    } else {
+                      nextState = favorite.filter((f) => f !== id);
+                    }
+                    setFavorite(nextState);
+                    localStorage.setItem('favoriteVacancies', JSON.stringify(nextState));
+                  }}
+                />
+              ))
+            )}
+            {amountPages > 1 ? (
+              <Pagination
+                total={amountPages}
+                value={activePage}
+                onChange={setactivePage}
+                style={{ justifyContent: 'center' }}
               />
-            ))}
-            <Pagination
+            ) : (
+              ''
+            )}
+            {/* <Pagination
               total={amountPages}
               value={activePage}
               onChange={setactivePage}
               style={{ justifyContent: 'center' }}
-            />
+            /> */}
           </Box>
         </Container>
       }
