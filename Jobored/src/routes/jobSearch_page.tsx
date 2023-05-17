@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Container, Pagination, Title } from '@mantine/core';
+import { Box, Container, Pagination } from '@mantine/core';
 import Filters from '../components/filters/Filters';
 import SearchInput from '../components/filters/SearchInput';
 import { VacancyCard } from '../components/vacancyCard/VacancyCard';
@@ -11,6 +11,7 @@ import { InitialInputValues } from '../types';
 import { Branch } from '../types';
 import { BranchParams } from '../types';
 import { Vacancy } from '../types';
+import { LackOfVacancies } from '../components/lack-of-vacancies/LackOfVacancies';
 
 export default function JobSearchPage() {
   const initialInputValues = {
@@ -152,19 +153,7 @@ export default function JobSearchPage() {
               sendFilters={sendFilters}
             />
             {catalogVacancies.length === 0 ? (
-              <Title
-                order={2}
-                fz="lg"
-                h={300}
-                sx={{
-                  fontFamily: 'Inter-Regular',
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}
-              >
-                Вакансии не найдены
-              </Title>
+              <LackOfVacancies />
             ) : (
               catalogVacancies.map((vacancy: Vacancy, index: number) => (
                 <VacancyCard

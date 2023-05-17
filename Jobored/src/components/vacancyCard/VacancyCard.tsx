@@ -17,7 +17,9 @@ export function VacancyCard({
     <>
       <Paper shadow="xs" radius="lg" mb={16} p={24}>
         <Group style={{ flexWrap: 'nowrap', justifyContent: 'space-between', alignItems: 'start' }}>
-          <Card component="a" href="/vacancy" p={0}>
+          <Card
+            component={window.location.href.includes('vacancy') ? "div" : "a"}
+            href="/vacancy" p={0} onClick={() => localStorage.setItem("idVacancy", `${vacancy.id}`)}>
             <Title order={5} c="#5E96FC" size="lg" ff="Inter-Regular" w="87%">
               {vacancy.profession} ({vacancy.firm_name})
             </Title>
