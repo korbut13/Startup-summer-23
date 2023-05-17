@@ -15,16 +15,14 @@ export default function FilterBranch({
     <Select
       value={value}
       onChange={onChangeBranch}
-      mb={20}
       ta="left"
       label="Отрасль"
       placeholder="Выберите отрасль"
-      radius="md"
-      rightSection={<ChevronDown size="1.5rem" color="gray" />}
-      rightSectionWidth={30}
+      rightSection={<ChevronDown size="1.2rem" color="#ACADB9" />}
       styles={{
-        rightSection: { pointerEvents: 'none' },
-        label: { fontSize: 16, fontWeight: 700 },
+        rightSection: { pointerEvents: 'none', width: "2.875rem", },
+        label: { fontSize: 16, fontWeight: 700, lineHeight: "18px", fontFamily: "Inter", marginBottom: "10px" },
+        input: { borderRadius: "8px", height: "42px", marginBottom: "17px", fontWeight: 400, fontSize: "14px", lineHeight: "20px", fontFamily: "Inter", },
       }}
       data={catalogBranches}
     />

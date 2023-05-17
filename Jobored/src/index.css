@@ -5,13 +5,26 @@
 }
 
 @font-face {
+  font-family: "Inter";
+  src: local("Inter"),
+    url("./fonts/Inter-Medium.ttf") format("truetype");
+}
+
+/* @font-face {
   font-family: "Inter-Regular";
   src: local("Inter-Regular"),
-    url("./fonts/Inter-Regular.ttf") format("truetype");
-}
+    url("./fonts/Inter-Italic.ttf") format("truetype");
+} */
 
 body {
   margin: 0 auto;
   background-color: #F5F5F5;
-  font-family: "Inter-Regular";
+  font-family: "Inter";
+}
+
+.mantine-162lpqd {
+  font-family: 'Inter';
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 20px;
 }

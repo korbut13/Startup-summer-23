@@ -15,24 +15,26 @@ export function VacancyCard({
 }) {
   return (
     <>
-      <Paper shadow="xs" radius="lg" mb={16} p={24}>
+      <Paper shadow="xs" radius="12px" mb={16} p="21px 24px 19px 24px">
         <Group style={{ flexWrap: 'nowrap', justifyContent: 'space-between', alignItems: 'start' }}>
           <Card
             component={window.location.href.includes('vacancy') ? "div" : "a"}
-            href="/vacancy" p={0} onClick={() => localStorage.setItem("idVacancy", `${vacancy.id}`)}>
-            <Title order={5} c="#5E96FC" size="lg" ff="Inter-Regular" w="87%">
+            href="/vacancy" p={0} onClick={() => localStorage.setItem("idVacancy", `${vacancy.id}`)}
+            style={{ width: "90%" }}
+          >
+            <Text c="#5E96FC" fw={600} fz="20px" ff="Inter" mb="7px">
               {vacancy.profession} ({vacancy.firm_name})
-            </Title>
-            <Group mb={12}>
-              <Title order={5} size="lg" ff="Inter-Regular">
+            </Text>
+            <Group mb={6}>
+              <Text ff="Inter" fw={600} fz="16px" lh="20px">
                 {createPaymentString(vacancy.payment_from, vacancy.payment_to, vacancy.currency)}
-              </Title>
-              <Indicator color="gray" size={7} position="middle-center" children={undefined} />
-              <Text size="sm">{vacancy.type_of_work.title}</Text>
+              </Text>
+              <Indicator color="gray" size={5} position="middle-center" children={undefined} />
+              <Text ff="Inter" fz="16px" fw={400}>{vacancy.type_of_work.title}</Text>
             </Group>
-            <Group>
+            <Group style={{ gap: "8px" }}>
               <MapPin size={20} strokeWidth={1} color={'#ced4da'} />
-              <Text size="md">{vacancy.town.title}</Text>
+              <Text ff="Inter" fz="16px" fw={400}>{vacancy.town.title}</Text>
             </Group>
           </Card>
           <div onClick={() => changeFavorite(vacancy.id)}>
