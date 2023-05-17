@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Pagination } from '@mantine/core';
+import { Container, Pagination, Loader } from '@mantine/core';
 import { Vacancy } from '../types';
 import { VacancyCard } from '../components/vacancyCard/VacancyCard';
 import { url } from '../url';
@@ -19,27 +19,34 @@ function createUrl(idsVacancies: number[], activePage: number) {
 export default function FavoritesVacanciesPage() {
   const [activePage, setactivePage] = React.useState(1);
   const [amountPages, setAmountPages] = React.useState(0);
+  const [loading, setLoading] = React.useState(true)
   const [favorite, setFavorite] = React.useState<number[]>(
     JSON.parse(localStorage.getItem('favoriteVacancies') || '[]')
   );
   const [catalogVacancies, setCatalogVacancies] = React.useState<Vacancy[]>([]);
   React.useEffect(() => {
-    favorite.length === 0
-      ? ''
-      : fetch(createUrl(favorite, activePage), {
-        method: 'GET',
-        headers: {
-          'x-secret-key': 'GEU4nvd3rej*jeh.eqp',
-          'X-Api-App-Id': `${authorizationData.client_secret}`,
-          Authorization: `Bearer ${token}`,
-          'Content-Type': 'application/json',
-        },
-      })
-        .then((response) => response.json())
-        .then((response: { objects: Vacancy[]; total: number }) => {
-          setAmountPages(Math.ceil(response.total / 4));
-          setCatalogVacancies(response.objects);
-        });
+    try {
+      setLoading(true)
+      favorite.length === 0
+        ? ''
+        : fetch(createUrl(favorite, activePage), {
+          method: 'GET',
+          headers: {
+            'x-secret-key': 'GEU4nvd3rej*jeh.eqp',
+            'X-Api-App-Id': `${authorizationData.client_secret}`,
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
+        })
+          .then((response) => response.json())
+          .then((response: { objects: Vacancy[]; total: number }) => {
+            setAmountPages(Math.ceil(response.total / 4));
+            setCatalogVacancies(response.objects);
+            setLoading(false)
+          });
+    } catch (error: unknown) {
+      console.error(error)
+    }
   }, [favorite, activePage]);
   return (
     <>
@@ -56,7 +63,7 @@ export default function FavoritesVacanciesPage() {
       >
         {favorite.length === 0 ? (
           <LackOfVacancies />
-        ) : (
+        ) : loading ? <Loader size="xl" w="100%" /> : (
           catalogVacancies.map((vacancy: Vacancy) => (
             <VacancyCard
               key={vacancy.id}

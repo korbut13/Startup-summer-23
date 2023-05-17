@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Box } from '@mantine/core';
+import { Container, Box, Loader } from '@mantine/core';
 import { url } from '../url';
 import { authorizationData } from '../authorisation';
 import { token } from '../requests/token';
@@ -19,45 +19,55 @@ const initialVacancy = {
 };
 
 export default function VacancyPage() {
+  const [loading, setLoading] = React.useState(true)
   const [vacancy, setVacancy] = React.useState<Vacancy>(initialVacancy);
   const [favorite, setFavorite] = React.useState<number[]>(
     JSON.parse(localStorage.getItem('favoriteVacancies') || '[]')
   );
   React.useEffect(() => {
-    fetch(`${url}/2.0/vacancies/${localStorage.getItem('idVacancy')}/`, {
-      method: 'GET',
-      headers: {
-        'x-secret-key': 'GEU4nvd3rej*jeh.eqp',
-        'X-Api-App-Id': `${authorizationData.client_secret}`,
-        Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json',
-      },
-    })
-      .then((response) => response.json())
-      .then((response: Vacancy) => {
-        setVacancy(response);
-      });
+    setLoading(true);
+    try {
+      fetch(`${url}/2.0/vacancies/${localStorage.getItem('idVacancy')}/`, {
+        method: 'GET',
+        headers: {
+          'x-secret-key': 'GEU4nvd3rej*jeh.eqp',
+          'X-Api-App-Id': `${authorizationData.client_secret}`,
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      })
+        .then((response) => response.json())
+        .then((response: Vacancy) => {
+          setVacancy(response);
+          setLoading(false);
+        });
+    } catch (error: unknown) {
+      console.error(error)
+    }
   }, []);
   return (
     <Container size={1116} mx="auto" py="xl">
-      <Box w="75%" mx="auto" style={{ flexDirection: 'column' }}>
-        <VacancyCard
-          vacancy={vacancy}
-          favoriteVacancies={favorite}
-          changeFavorite={(id: number) => {
-            const index = favorite.indexOf(id);
-            let nextState: number[] = [];
-            if (index === -1) {
-              nextState = [...favorite, id];
-            } else {
-              nextState = favorite.filter((f) => f !== id);
-            }
-            setFavorite(nextState);
-            localStorage.setItem('favoriteVacancies', JSON.stringify(nextState));
-          }}
-        />
-        <div dangerouslySetInnerHTML={{ __html: vacancy.vacancyRichText }}></div>
-      </Box>
+      {loading ? <Loader size="xl" w="100%" /> :
+        (<Box w="75%" mx="auto" style={{ flexDirection: 'column' }}>
+          <VacancyCard
+            vacancy={vacancy}
+            favoriteVacancies={favorite}
+            changeFavorite={(id: number) => {
+              const index = favorite.indexOf(id);
+              let nextState: number[] = [];
+              if (index === -1) {
+                nextState = [...favorite, id];
+              } else {
+                nextState = favorite.filter((f) => f !== id);
+              }
+              setFavorite(nextState);
+              localStorage.setItem('favoriteVacancies', JSON.stringify(nextState));
+            }}
+          />
+          <div dangerouslySetInnerHTML={{ __html: vacancy.vacancyRichText }}></div>
+        </Box>)
+      }
+
     </Container>
   );
 }
