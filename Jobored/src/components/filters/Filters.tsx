@@ -1,4 +1,4 @@
-import { Group, Title, Button, NumberInput } from '@mantine/core';
+import { Group, Text, Button, NumberInput } from '@mantine/core';
 import { CloseIcon } from './_closeIcon';
 import FilterBranch from './FilterBranch';
 import { BranchParams } from '../../types';
@@ -27,9 +27,9 @@ export default function Filters({
   return (
     <>
       <Group align='flex-start' mb='1.7rem' style={{ justifyContent: 'space-between' }}>
-        <Title order={3} fz="20px" ff='Inter' fw={700} lh="20px">
+        <Text fz="20px" ff='InterBold' fw={700} lh="20px" >
           Фильтры
-        </Title>
+        </Text>
         <Button
           onClick={clearFilters}
           color="gray.5"
@@ -53,9 +53,11 @@ export default function Filters({
         value={paymentFromValue.length === 0 ? '' : +paymentFromValue}
         onChange={onChangePaymentFrom}
         styles={{
-          label: { fontSize: 16, fontWeight: 700, lineHeight: "19px", fontFamily: "Inter", marginBottom: "8px" },
+          label: { fontSize: 16, fontWeight: 700, lineHeight: "19px", fontFamily: "InterBold", marginBottom: "8px" },
           input: { borderRadius: "8px", marginBottom: "8px", height: "42px", fontWeight: 400, fontSize: "14px", lineHeight: "20px", fontFamily: "Inter" },
-          control: { border: "none", color: "#ACADB9", justifyContent: "flex-start" }
+          control: { border: "none", color: "#ACADB9", justifyContent: "flex-start" },
+          controlUp: { alignItems: "flex-end" },
+          controlDown: { alignItems: "flex-start" }
         }}
       ></NumberInput>
       <NumberInput
@@ -65,7 +67,9 @@ export default function Filters({
         onChange={onChangePaymentTo}
         styles={{
           input: { borderRadius: "8px", marginBottom: "20px", height: "42px", fontWeight: 400, fontSize: "14px", lineHeight: "20px", fontFamily: "Inter" },
-          control: { border: "none", color: "#ACADB9", justifyContent: "flex-start" }
+          control: { border: "none", color: "#ACADB9", justifyContent: "flex-start" },
+          controlUp: { alignItems: "flex-end" },
+          controlDown: { alignItems: "flex-start" }
         }}
       ></NumberInput>
       <Button

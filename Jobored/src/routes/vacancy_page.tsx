@@ -46,9 +46,16 @@ export default function VacancyPage() {
     }
   }, []);
   return (
-    <Container size={1116} mx="auto" py="xl">
+    <Container
+      size={773}
+      mx="auto"
+      style={{
+        display: 'flex',
+        justifyContent: 'space-between',
+        flexDirection: 'column',
+      }}>
       {loading ? <Loader size="xl" w="100%" /> :
-        (<Box w="75%" mx="auto" style={{ flexDirection: 'column' }}>
+        (<>
           <VacancyCard
             vacancy={vacancy}
             favoriteVacancies={favorite}
@@ -64,10 +71,11 @@ export default function VacancyPage() {
               localStorage.setItem('favoriteVacancies', JSON.stringify(nextState));
             }}
           />
-          <div dangerouslySetInnerHTML={{ __html: vacancy.vacancyRichText }}></div>
-        </Box>)
+          <div className='vacancy-description' style={{
+            border: "1px solid #EAEBED", borderRadius: "12px", background: "white", padding: "24px",
+          }} dangerouslySetInnerHTML={{ __html: vacancy.vacancyRichText }}></div>
+        </>)
       }
-
     </Container>
   );
 }

@@ -21,7 +21,8 @@ export default function SearchInput({
             value={value}
             onChange={onChange}
             styles={{
-              input: { borderRadius: "8px", borderColor: "#EAEBED", height: "48px", width: "100%", marginBottom: "19px", fontWeight: 400, fontSize: "14px", lineHeight: "21px", fontFamily: "Inter" },
+              input: { borderRadius: "8px", borderColor: "#EAEBED", height: "48px", width: "100%", marginBottom: "17px", fontWeight: 400, fontSize: "14px", lineHeight: "21px", fontFamily: "Inter", },
+              icon: {}
             }}
           />
           <Button onClick={sendFilters}

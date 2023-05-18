@@ -126,11 +126,11 @@ export default function JobSearchPage() {
             sx={(theme) => ({
               backgroundColor: 'white',
               textAlign: 'center',
-              padding: "17px 20px",
+              padding: "20px 20px",
               borderRadius: theme.radius.md,
               border: '1px solid #EAEBED',
               width: '298px',
-              maxHeight: 323,
+              maxHeight: 320,
             })}
           >
             <Filters
@@ -186,17 +186,11 @@ export default function JobSearchPage() {
                 total={amountPages}
                 value={activePage}
                 onChange={setactivePage}
-                style={{ justifyContent: 'center' }}
+                style={{ justifyContent: 'center', marginTop: "38px" }}
               />
             ) : (
               ''
             )}
-            {/* <Pagination
-              total={amountPages}
-              value={activePage}
-              onChange={setactivePage}
-              style={{ justifyContent: 'center' }}
-            /> */}
           </Box>
         </Container>
       }

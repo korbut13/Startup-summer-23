@@ -51,14 +51,12 @@ export default function FavoritesVacanciesPage() {
   return (
     <>
       <Container
-        size={1116}
+        size={773}
         mx="auto"
-        py="xl"
         style={{
           display: 'flex',
           justifyContent: 'space-between',
           flexDirection: 'column',
-          gap: 28,
         }}
       >
         {favorite.length === 0 ? (
@@ -83,18 +81,12 @@ export default function FavoritesVacanciesPage() {
             />
           ))
         )}
-        {/* <Pagination
-          total={amountPages}
-          value={activePage}
-          onChange={setactivePage}
-          style={{ justifyContent: 'center' }}
-        /> */}
         {amountPages > 1 ? (
           <Pagination
             total={amountPages}
             value={activePage}
             onChange={setactivePage}
-            style={{ justifyContent: 'center' }}
+            style={{ justifyContent: 'center', marginTop: "87px" }}
           />
         ) : (
           ''
