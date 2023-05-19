@@ -6,6 +6,7 @@ import { url } from '../url';
 import { authorizationData } from '../authorisation';
 import { token } from '../requests/token';
 import { LackOfVacancies } from '../components/lack-of-vacancies/LackOfVacancies';
+import { useStyles } from '../utils/styles';
 
 function createUrl(idsVacancies: number[], activePage: number) {
   let path = `${url}/2.0/vacancies/?page=${activePage - 1}&count=4&`;
@@ -17,13 +18,16 @@ function createUrl(idsVacancies: number[], activePage: number) {
 }
 
 export default function FavoritesVacanciesPage() {
-  const [activePage, setactivePage] = React.useState(1);
+  const { classes } = useStyles();
+  const [activePage, setActivePage] = React.useState(1);
   const [amountPages, setAmountPages] = React.useState(0);
   const [loading, setLoading] = React.useState(true)
   const [favorite, setFavorite] = React.useState<number[]>(
     JSON.parse(localStorage.getItem('favoriteVacancies') || '[]')
   );
   const [catalogVacancies, setCatalogVacancies] = React.useState<Vacancy[]>([]);
+  const [amountVacOnPage, setAmountVacOnPage] = React.useState(0)
+
   React.useEffect(() => {
     try {
       setLoading(true)
@@ -42,6 +46,9 @@ export default function FavoritesVacanciesPage() {
           .then((response: { objects: Vacancy[]; total: number }) => {
             setAmountPages(Math.ceil(response.total / 4));
             setCatalogVacancies(response.objects);
+            setAmountVacOnPage(response.objects.length);
+            // console.log("vacancies",)
+            // console.log("",)
             setLoading(false)
           });
     } catch (error: unknown) {
@@ -52,12 +59,7 @@ export default function FavoritesVacanciesPage() {
     <>
       <Container
         size={773}
-        mx="auto"
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          flexDirection: 'column',
-        }}
+        className={classes.containerPages}
       >
         {favorite.length === 0 ? (
           <LackOfVacancies />
@@ -77,15 +79,19 @@ export default function FavoritesVacanciesPage() {
                 }
                 setFavorite(nextState);
                 localStorage.setItem('favoriteVacancies', JSON.stringify(nextState));
+                if (activePage !== 1 && amountVacOnPage === 1) {
+                  setActivePage(activePage - 1)
+                }
               }}
             />
           ))
         )}
+
         {amountPages > 1 ? (
           <Pagination
             total={amountPages}
             value={activePage}
-            onChange={setactivePage}
+            onChange={setActivePage}
             style={{ justifyContent: 'center', marginTop: "87px" }}
           />
         ) : (

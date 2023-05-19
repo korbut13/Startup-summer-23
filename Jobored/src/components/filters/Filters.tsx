@@ -2,6 +2,7 @@ import { Group, Text, Button, NumberInput } from '@mantine/core';
 import { CloseIcon } from './_closeIcon';
 import FilterBranch from './FilterBranch';
 import { BranchParams } from '../../types';
+import { useStyles } from '../../utils/styles';
 
 export default function Filters({
   catalogBranches,
@@ -24,6 +25,7 @@ export default function Filters({
   sendFilters: () => void;
   clearFilters: () => void;
 }) {
+  const { classes } = useStyles();
   return (
     <>
       <Group align='flex-start' mb='1.7rem' style={{ justifyContent: 'space-between' }}>
@@ -32,10 +34,12 @@ export default function Filters({
         </Text>
         <Button
           onClick={clearFilters}
-          color="gray.5"
           rightIcon={<CloseIcon />}
           variant="white"
-          styles={{ root: { fontWeight: 500, fontSize: 14, fontFamily: "Inter", lineHeight: "20px", paddingRight: 0, height: "auto" }, rightIcon: { marginLeft: 5 } }}
+          className={classes.resetFilters}
+          styles={{
+            rightIcon: { marginLeft: "3px" }
+          }}
         >
           Сбросить все
         </Button>
@@ -52,9 +56,8 @@ export default function Filters({
         placeholder="От"
         value={paymentFromValue.length === 0 ? '' : +paymentFromValue}
         onChange={onChangePaymentFrom}
+        className={classes.numberInputFrom}
         styles={{
-          label: { fontSize: 16, fontWeight: 700, lineHeight: "19px", fontFamily: "InterBold", marginBottom: "8px" },
-          input: { borderRadius: "8px", marginBottom: "8px", height: "42px", fontWeight: 400, fontSize: "14px", lineHeight: "20px", fontFamily: "Inter" },
           control: { border: "none", color: "#ACADB9", justifyContent: "flex-start" },
           controlUp: { alignItems: "flex-end" },
           controlDown: { alignItems: "flex-start" }

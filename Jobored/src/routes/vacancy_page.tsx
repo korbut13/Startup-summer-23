@@ -1,10 +1,11 @@
 import React from 'react';
-import { Container, Box, Loader } from '@mantine/core';
+import { Container, Loader } from '@mantine/core';
 import { url } from '../url';
 import { authorizationData } from '../authorisation';
 import { token } from '../requests/token';
 import { Vacancy } from '../types';
 import { VacancyCard } from '../components/vacancyCard/VacancyCard';
+import { useStyles } from '../utils/styles';
 
 const initialVacancy = {
   id: 0,
@@ -19,6 +20,7 @@ const initialVacancy = {
 };
 
 export default function VacancyPage() {
+  const { classes } = useStyles();
   const [loading, setLoading] = React.useState(true)
   const [vacancy, setVacancy] = React.useState<Vacancy>(initialVacancy);
   const [favorite, setFavorite] = React.useState<number[]>(
@@ -48,12 +50,8 @@ export default function VacancyPage() {
   return (
     <Container
       size={773}
-      mx="auto"
-      style={{
-        display: 'flex',
-        justifyContent: 'space-between',
-        flexDirection: 'column',
-      }}>
+      className={classes.containerPages}
+    >
       {loading ? <Loader size="xl" w="100%" /> :
         (<>
           <VacancyCard
@@ -71,9 +69,7 @@ export default function VacancyPage() {
               localStorage.setItem('favoriteVacancies', JSON.stringify(nextState));
             }}
           />
-          <div className='vacancy-description' style={{
-            border: "1px solid #EAEBED", borderRadius: "12px", background: "white", padding: "24px",
-          }} dangerouslySetInnerHTML={{ __html: vacancy.vacancyRichText }}></div>
+          <div className={classes.vacancyDescription} dangerouslySetInnerHTML={{ __html: vacancy.vacancyRichText }}></div>
         </>)
       }
     </Container>

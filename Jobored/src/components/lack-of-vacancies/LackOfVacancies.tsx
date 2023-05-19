@@ -1,12 +1,11 @@
-import { LetterSpacing } from 'tabler-icons-react';
 import { Seeker } from './_seeker';
 import { Group, Text, Button } from '@mantine/core';
 
 export function LackOfVacancies() {
   return (
-    <Group style={{ flexDirection: 'column' }} mt="3.45rem">
+    <Group style={{ flexDirection: 'column' }} mt="10.4%">
       <Seeker />
-      <Text ff="Inter" fw={700} fz={24} c="#343A40;" mb="0.8rem" mt="0.7rem">
+      <Text ff="Inter" fw={700} fz={24} c="#343A40;" lts="0.2px" mb="0.8rem" mt="0.7rem">
         Упс, здесь еще ничего нет!
       </Text>
       <Button component="a" href="/" variant="light"

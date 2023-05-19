@@ -1,6 +1,7 @@
 import { Select } from '@mantine/core';
 import { ChevronDown } from 'tabler-icons-react';
 import { BranchParams } from '../../types';
+import { useStyles } from '../../utils/styles';
 
 export default function FilterBranch({
   catalogBranches,
@@ -11,6 +12,7 @@ export default function FilterBranch({
   value: string;
   onChangeBranch: (value: string) => void;
 }) {
+  const { classes } = useStyles();
   return (
     <Select
       value={value}
@@ -19,10 +21,12 @@ export default function FilterBranch({
       label="Отрасль"
       placeholder="Выберите отрасль"
       rightSection={<ChevronDown size="1.5rem" color="#ACADB9" />}
+      className={classes.select}
       styles={{
-        rightSection: { pointerEvents: 'none', width: "2.875rem", },
-        label: { fontSize: 16, fontWeight: 700, lineHeight: "18px", fontFamily: "InterBold", marginBottom: "9px" },
-        input: { borderRadius: "8px", height: "42px", marginBottom: "17px", fontWeight: 400, fontSize: "14px", lineHeight: "20px", fontFamily: "Inter", },
+        rightSection: {
+          pointerEvents: 'none',
+          width: "2.875rem",
+        },
       }}
       data={catalogBranches}
     />
