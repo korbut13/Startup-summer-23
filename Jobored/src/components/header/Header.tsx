@@ -24,8 +24,7 @@ export default function App() {
       label={link.label}
       onClick={() => setActive(index)}
       variant="subtle"
-      w="24.4%"
-      lts="0.2px"
+      className={classes.link}
     />
   ))
   return (
@@ -38,7 +37,7 @@ export default function App() {
           </Title>
         </Card>
         <MediaQuery largerThan="xs" styles={{ display: "none" }}>
-          <Menu shadow="md" width={200}>
+          <Menu shadow="md" width={220}>
             <Menu.Target>
               <Burger
                 opened={opened}

@@ -1,3 +1,13 @@
+const fontInter = {
+  fontFamily: "Inter",
+  fontSize: "16px",
+  fontWeight: 400,
+}
+const fontInterBold = {
+  fontFamily: "InterBold",
+  fontWeight: 700,
+}
+
 import { createStyles } from "@mantine/core";
 export const useStyles = createStyles((theme) => ({
   header: {
@@ -10,6 +20,16 @@ export const useStyles = createStyles((theme) => ({
   navLinks: {
     [theme.fn.smallerThan("xs")]: {
       display: "none"
+    }
+  },
+  link: {
+    width: "24.4%",
+    letterSpacing: "0.2px",
+    [theme.fn.smallerThan("md")]: {
+      width: "50%",
+    },
+    [theme.fn.smallerThan("xs")]: {
+      width: "100%",
     }
   },
   container: {
@@ -32,6 +52,22 @@ export const useStyles = createStyles((theme) => ({
       display: "none"
     }
   },
+  searchInput: {
+    position: "absolute",
+    top: "8px",
+    right: "12px",
+    background: "#5E96FC",
+    borderRadius: "8px",
+    border: "none",
+    padding: "0px 20px",
+    height: "31px",
+    fontFamily: "Inter",
+    fontSize: "14px",
+    fontWeight: 500,
+    [theme.fn.smallerThan("xs")]: {
+      padding: "0px 5px"
+    }
+  },
   openFilters: {
     width: "100%",
     background: "#5E96FC",
@@ -41,52 +77,52 @@ export const useStyles = createStyles((theme) => ({
   },
   select: {
     label: {
+      ...fontInterBold,
       fontSize: "16px",
-      fontWeight: 700,
       lineHeight: "18px",
-      fontFamily: "InterBold",
       marginBottom: "9px"
     },
     input: {
       borderRadius: "8px",
       height: "42px",
       marginBottom: "17px",
-      fontWeight: 400,
-      fontSize: "14px",
-      lineHeight: "20px",
       fontFamily: "Inter",
+      fontSize: "14px",
+      fontWeight: 400,
+      lineHeight: "20px",
     }
   },
   resetFilters: {
     color: "#ACADB9",
-    fontWeight: 500,
-    fontSize: "14px",
     fontFamily: "Inter",
+    fontSize: "14px",
+    fontWeight: 500,
     lineHeight: "20px",
     paddingRight: "0px",
     height: "auto"
   },
   numberInputFrom: {
     label: {
+      ...fontInterBold,
       fontSize: "16px",
-      fontWeight: 700,
       lineHeight: "19px",
-      fontFamily: "InterBold",
       marginBottom: "8px"
     },
     input: {
       borderRadius: "8px",
       marginBottom: "8px",
       height: "42px",
-      fontWeight: 400,
+      fontFamily: "Inter",
       fontSize: "14px",
+      fontWeight: 400,
       lineHeight: "20px",
-      fontFamily: "Inter"
     }
   },
   paper: {
     borderRadius: "12px",
-    border: "1px solid #EAEBED", marginBottom: "16px", padding: "23px 22px 21px 23px",
+    border: "1px solid #EAEBED",
+    marginBottom: "16px",
+    padding: "23px 22px 21px 23px",
   },
   group: {
     flexWrap: 'nowrap',
@@ -94,80 +130,112 @@ export const useStyles = createStyles((theme) => ({
     alignItems: 'start',
   },
   vacancyProfession: {
-    fontWeight: 700,
+    ...fontInterBold,
     fontSize: "28px",
     lineHeight: "34px",
-    fontFamily: "InterBold",
     color: "black",
     marginBottom: "16px",
+    [theme.fn.smallerThan("xs")]: {
+      fontSize: "20px",
+      lineHeight: "30px",
+      marginBottom: "8px"
+    }
   },
   vacanciesProfession: {
-    fontWeight: 600,
-    fontSize: "20px",
     fontFamily: "Inter",
-    letterSpacing: "0.2px",
+    fontSize: "20px",
+    fontWeight: 600,
     lineHeight: "24px",
+    letterSpacing: "0.2px",
     color: "#5E96FC",
-    marginBottom: "13px"
+    marginBottom: "13px",
+    [theme.fn.smallerThan("xs")]: {
+      fontSize: "15px",
+      marginBottom: "8px",
+    }
+  },
+  vacancyIconAndTown: {
+    marginTop: "16.7px",
+    gap: "8px",
+    [theme.fn.smallerThan("xs")]: {
+      gap: "3px",
+      marginBottom: "10px",
+    }
+  },
+  vacanciesIconAndTown: {
+    marginTop: "13px",
+    gap: "8px",
+    [theme.fn.smallerThan("xs")]: {
+      gap: "3px",
+      marginBottom: "8px",
+    }
   },
   vacancyPayment: {
-    fontWeight: 700,
+    ...fontInterBold,
     fontSize: "20px",
     lineHeight: "20px",
-    fontFamily: "InterBold"
+    [theme.fn.smallerThan("xs")]: {
+      fontSize: "15px",
+    }
   },
   vacanciesPayment: {
-    fontWeight: 600,
-    fontSize: "16px",
-    letterSpacing: "0.2px",
     fontFamily: "Inter",
-    lineHeight: "20px"
+    fontSize: "16px",
+    fontWeight: 600,
+    lineHeight: "20px",
+    letterSpacing: "0.2px",
+    [theme.fn.smallerThan("xs")]: {
+      fontSize: "14px",
+    }
   },
   vacancyTypeOfWork: {
-    fontWeight: 400,
+    fontFamily: "Inter",
     fontSize: "20px",
+    fontWeight: 400,
     lineHeight: "20px",
-    fontFamily: "Inter"
   },
   vacanciesTypeOfWork: {
-    fontWeight: 400,
-    fontSize: "16px",
+    ...fontInter,
+    lineHeight: "20px",
     letterSpacing: "0.1px",
-    fontFamily: "Inter",
-    lineHeight: "20px"
+    [theme.fn.smallerThan("xs")]: {
+      fontSize: "14px",
+    }
   },
   vacancyTown: {
-    fontWeight: 400,
-    fontSize: "16px",
+    ...fontInter,
     lineHeight: "140%",
-    fontFamily: "Inter"
   },
   vacanciesTown: {
-    fontWeight: 400,
-    fontSize: "16px",
-    fontFamily: "Inter",
+    ...fontInter,
     lineHeight: "20px"
   },
   vacancyDescription: {
     b: {
-      fontFamily: "InterBold",
-      fontWeight: 700,
+      ...fontInterBold,
       fontSize: "20px",
       margin: "0px",
+      [theme.fn.smallerThan("xs")]: {
+        fontSize: "14px",
+      }
     },
     p: {
-      fontFamily: "InterBold",
-      fontWeight: 700,
+      ...fontInterBold,
       fontSize: "20px",
       margin: "0px",
+      [theme.fn.smallerThan("xs")]: {
+        fontSize: "14px",
+      }
     },
     border: "1px solid #EAEBED",
     borderRadius: "12px",
     background: "white",
     padding: "24px",
-    fontFamily: "Inter",
-    fontWeight: 400,
-    fontSize: "16px",
-    lineHeight: "22.4px"
+    ...fontInter,
+    lineHeight: "22.4px",
+    [theme.fn.smallerThan("xs")]: {
+      fontSize: "14px",
+      padding: "15px",
+    }
   },
 }));

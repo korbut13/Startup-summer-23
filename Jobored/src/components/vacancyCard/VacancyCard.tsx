@@ -107,10 +107,7 @@ export function VacancyCard({
               <Indicator color="gray" size={5} position="middle-center" children={undefined} />
               <Text className={getStyle("typeOfWork")}>{vacancy.type_of_work.title}</Text>
             </Group>
-            <Group
-              style={window.location.href.includes('vacancy')
-                ? { marginTop: "16.7px", gap: "8px" }
-                : { marginTop: "13px", gap: "8px" }}>
+            <Group className={getStyle("iconAndTown")}>
               <MapPin size={20} strokeWidth={1} color={'#ced4da'} />
               <Text className={getStyle("town")}>{vacancy.town.title}</Text>
             </Group>

@@ -81,7 +81,7 @@ export default function JobSearchPage() {
     sx={(theme) => ({
       backgroundColor: 'white',
       textAlign: 'center',
-      padding: "18px 20px",
+      padding: "19px 20px",
       borderRadius: theme.radius.md,
       border: '1px solid #EAEBED',
       width: '275px',

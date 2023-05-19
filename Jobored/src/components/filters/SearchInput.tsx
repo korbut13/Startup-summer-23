@@ -1,6 +1,7 @@
 import React from 'react';
 import { Input, Button, Group } from '@mantine/core';
 import { Search } from 'tabler-icons-react';
+import { useStyles } from '../../utils/styles';
 
 export default function SearchInput({
   value,
@@ -11,6 +12,7 @@ export default function SearchInput({
   onChange: (event: React.ChangeEvent) => void;
   sendFilters: () => void;
 }) {
+  const { classes } = useStyles();
   return (
     <>
       <Group >
@@ -22,14 +24,11 @@ export default function SearchInput({
             onChange={onChange}
             styles={{
               input: { borderRadius: "8px", borderColor: "#EAEBED", height: "48px", width: "100%", marginBottom: "17px", fontWeight: 400, fontSize: "14px", lineHeight: "21px", fontFamily: "Inter", },
-              icon: {}
             }}
           />
           <Button onClick={sendFilters}
-            styles={{
-              root: { position: "absolute", top: "8px", right: "12px", background: "#5E96FC", borderRadius: "8px", border: "none", padding: "0px 20px", height: "31px" },
-              inner: { fontSize: "14px", fontFamily: "Inter", fontWeight: 500 }
-            }}>Поиск</Button>
+            className={classes.searchInput}
+          >Поиск</Button>
         </Input.Wrapper>
 
       </Group >

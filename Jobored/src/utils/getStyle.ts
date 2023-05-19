@@ -13,6 +13,9 @@ export default function getStyle(vacancyParam: string) {
       case "typeOfWork":
         return classes.vacancyTypeOfWork;
         break;
+      case "iconAndTown":
+        return classes.vacancyIconAndTown;
+        break;
       case "town":
         return classes.vacancyTown;
         break;
@@ -29,6 +32,9 @@ export default function getStyle(vacancyParam: string) {
         break;
       case "typeOfWork":
         return classes.vacanciesTypeOfWork;
+        break;
+      case "iconAndTown":
+        return classes.vacanciesIconAndTown;
         break;
       case "town":
         return classes.vacanciesTown;
