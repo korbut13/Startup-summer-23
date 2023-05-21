@@ -15,6 +15,7 @@ export default function FilterBranch({
   const { classes } = useStyles();
   return (
     <Select
+      data-elem="industry-select"
       value={value}
       onChange={onChangeBranch}
       ta="left"

@@ -18,6 +18,7 @@ export default function SearchInput({
       <Group >
         <Input.Wrapper w="100%" style={{ display: "block", position: "relative" }}>
           <Input
+            data-elem="search-input"
             icon={<Search size="1.19rem" />}
             placeholder="Введите название вакансии"
             value={value}
@@ -26,7 +27,7 @@ export default function SearchInput({
               input: { borderRadius: "8px", borderColor: "#EAEBED", height: "48px", width: "100%", marginBottom: "17px", fontWeight: 400, fontSize: "14px", lineHeight: "21px", fontFamily: "Inter", },
             }}
           />
-          <Button onClick={sendFilters}
+          <Button data-elem="search-button" onClick={sendFilters}
             className={classes.searchInput}
           >Поиск</Button>
         </Input.Wrapper>

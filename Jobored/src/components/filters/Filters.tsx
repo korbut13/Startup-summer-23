@@ -50,6 +50,7 @@ export default function Filters({
         onChangeBranch={onChangeBranch}
       />
       <NumberInput
+        data-elem="salary-from-input"
         ta="start"
         type="number"
         label="Оклад"
@@ -64,6 +65,7 @@ export default function Filters({
         }}
       ></NumberInput>
       <NumberInput
+        data-elem="salary-to-input"
         type="number"
         placeholder="До"
         value={paymentToValue.length === 0 ? '' : +paymentToValue}
@@ -76,6 +78,7 @@ export default function Filters({
         }}
       ></NumberInput>
       <Button
+        data-elem="search-button"
         type="submit"
         sx={{ fontFamily: 'Inter', fontWeight: 500, fontSize: "14px", height: "40px", borderRadius: "8px", background: "#5E96FC", width: "100%" }}
         onClick={sendFilters}
