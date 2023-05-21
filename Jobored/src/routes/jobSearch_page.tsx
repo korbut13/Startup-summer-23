@@ -102,8 +102,7 @@ export default function JobSearchPage() {
       onChangePaymentTo={(value: number) => setNewValues(value, 'payment_to')}
       sendFilters={sendFilters}
       clearFilters={() => {
-        setInputValues(initialInputValues);
-        setDataFilters(initialDataFilters);
+        window.location.search = '';
       }}
     />
   </Box>
