@@ -52,8 +52,8 @@ export type InitialDataFilters = {
 };
 
 export type InitialInputValues = {
-  searchInputValue: string;
+  keyword: string;
   payment_from: string;
   payment_to: string;
-  branchName: string;
+  catalogues: string;
 };

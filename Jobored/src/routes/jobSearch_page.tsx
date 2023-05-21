@@ -1,25 +1,27 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Box, Container, Pagination, Loader, Drawer, Button } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import Filters from '../components/filters/Filters';
 import SearchInput from '../components/filters/SearchInput';
 import { VacancyCard } from '../components/vacancyCard/VacancyCard';
-import { url } from '../url';
 import { authorizationData } from '../authorisation';
 import { token } from '../requests/token';
 import createUrlString from '../utils/createUrlString';
 import { InitialInputValues } from '../types';
-import { Branch } from '../types';
-import { BranchParams } from '../types';
 import { Vacancy } from '../types';
 import { LackOfVacancies } from '../components/lack-of-vacancies/LackOfVacancies';
 import { useStyles } from '../utils/styles';
+import { catalogBranchesInit } from '../requests/getCatalogues';
+import setInitValuesFromUrl from '../utils/getValuesFromUrl';
 
+
+const catalogBranches = catalogBranchesInit;
 const initialInputValues = {
-  searchInputValue: '',
+  keyword: '',
   payment_from: '',
   payment_to: '',
-  branchName: '',
+  catalogues: '',
 };
 const initialDataFilters = {
   published: '1',
@@ -30,13 +32,14 @@ const initialDataFilters = {
 };
 
 export default function JobSearchPage() {
+  setInitValuesFromUrl(initialInputValues, initialDataFilters, catalogBranches);
+
+  const navigate = useNavigate();
   const { classes } = useStyles();
   const [opened, { open, close }] = useDisclosure(false);
-
-  const [activePage, setactivePage] = React.useState(1);
+  const [activePage, setActivePage] = React.useState(1);
   const [amountPages, setAmountPages] = React.useState(0);
   const [loading, setLoading] = React.useState(true)
-  const [catalogBranches, setCatalogBranches] = React.useState<BranchParams[]>([]);
   const [catalogVacancies, setCatalogVacancies] = React.useState<Vacancy[]>([]);
   const [inputValues, setInputValues] = React.useState<InitialInputValues>(initialInputValues);
   const [dataFilters, setDataFilters] = React.useState(initialDataFilters);
@@ -46,26 +49,26 @@ export default function JobSearchPage() {
 
   const sendFilters = () => {
     const selectedBranch = catalogBranches.filter(
-      (branch) => branch.value === inputValues.branchName
+      (branch) => branch.value === inputValues.catalogues
     );
     const branchKey = selectedBranch.length !== 0 ? selectedBranch[0].catalogues : 0;
     setDataFilters((prevState) => ({
       ...prevState,
-      keyword: inputValues.searchInputValue,
+      keyword: inputValues.keyword,
       payment_from: inputValues.payment_from,
       payment_to: inputValues.payment_to,
       catalogues: branchKey.toString(),
     }));
-    setactivePage(1);
+    setActivePage(1);
   };
 
   const setNewValues = (valueName: string | number, keyName: string) => {
     setInputValues((prevState) => {
       const tempState: InitialInputValues = {
-        searchInputValue: '',
+        keyword: '',
         payment_from: '',
         payment_to: '',
-        branchName: '',
+        catalogues: '',
       };
       for (const [key, value] of Object.entries(prevState)) {
         if (key !== keyName) {
@@ -90,8 +93,8 @@ export default function JobSearchPage() {
   >
     <Filters
       catalogBranches={catalogBranches}
-      branchName={inputValues.branchName}
-      onChangeBranch={(value: string) => setNewValues(value, 'branchName')}
+      branchName={inputValues.catalogues}
+      onChangeBranch={(value: string) => setNewValues(value, 'catalogues')}
       paymentFromValue={inputValues.payment_from}
       onChangePaymentFrom={(value: number) => setNewValues(value, 'payment_from')}
       paymentToValue={inputValues.payment_to}
@@ -105,28 +108,22 @@ export default function JobSearchPage() {
   </Box>
 
   React.useEffect(() => {
-    try {
-      fetch(`${url}/2.0/catalogues/`, {
-        method: 'GET',
-        headers: {
-          'x-secret-key': 'GEU4nvd3rej*jeh.eqp',
-        },
-      })
-        .then((response) => response.json())
-        .then((response: Branch[]) => {
-          const changedCatalogBranches = response.map((branch) => {
-            return {
-              label: branch.title_trimmed,
-              value: branch.title_trimmed,
-              catalogues: branch.key,
-            };
-          });
-          setCatalogBranches(changedCatalogBranches);
-        });
-    } catch (error: unknown) {
-      console.error(error)
+    let searchParams = '?';
+    const filterParams = {
+      catalogues: dataFilters.catalogues,
+      payment_from: dataFilters.payment_from,
+      payment_to: dataFilters.payment_to,
+      keyword: dataFilters.keyword,
+      activePage: activePage
+    };
+    for (const key in filterParams) {
+      if (filterParams[key as keyof typeof filterParams] && filterParams[key as keyof typeof filterParams] != 0) {
+        searchParams = searchParams + `${key}=${filterParams[key as keyof typeof filterParams]}&`
+      } searchParams;
     }
-  }, []);
+    navigate(searchParams.slice(0, -1));
+
+  }, [dataFilters.catalogues, dataFilters.payment_from, dataFilters.payment_to, dataFilters.keyword, activePage])
 
   React.useEffect(() => {
     setLoading(true)
@@ -163,11 +160,11 @@ export default function JobSearchPage() {
         </Box >
         <Box w="100%">
           <SearchInput
-            value={inputValues.searchInputValue}
+            value={inputValues.keyword}
             onChange={(event: React.ChangeEvent) => {
               setInputValues((prevState) => ({
                 ...prevState,
-                searchInputValue: (event.target as HTMLInputElement).value,
+                keyword: (event.target as HTMLInputElement).value,
               }));
             }}
             sendFilters={sendFilters}
@@ -198,7 +195,7 @@ export default function JobSearchPage() {
             <Pagination
               total={amountPages}
               value={activePage}
-              onChange={setactivePage}
+              onChange={setActivePage}
               style={{ justifyContent: 'center', marginTop: "38px" }}
             />
           ) : (

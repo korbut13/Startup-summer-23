@@ -2,6 +2,7 @@ import { url } from '../url';
 import { InitialDataFilters } from '../types';
 
 export default function createUrlString(dataFilters: InitialDataFilters, activePage: number) {
+  let count = 0;
   let pathUrl = `${url}/2.0/vacancies/?page=${activePage - 1}&count=4&`;
   pathUrl =
     dataFilters.payment_from.length > 0 || dataFilters.payment_to.length > 0
@@ -14,6 +15,7 @@ export default function createUrlString(dataFilters: InitialDataFilters, activeP
       dataFilters[key as keyof typeof dataFilters] != '0'
     ) {
       pathUrl = pathUrl + `${key}=${dataFilters[key as keyof typeof dataFilters]}&`;
+      count = count + 1;
     }
     pathUrl;
   }
