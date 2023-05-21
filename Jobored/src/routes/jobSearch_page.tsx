@@ -14,6 +14,7 @@ import { LackOfVacancies } from '../components/lack-of-vacancies/LackOfVacancies
 import { useStyles } from '../utils/styles';
 import { catalogBranchesInit } from '../requests/getCatalogues';
 import setInitValuesFromUrl from '../utils/getValuesFromUrl';
+import getNumOfFiltersSelected from '../utils/getNumOfFiltersSelected';
 
 
 const catalogBranches = catalogBranchesInit;
@@ -153,7 +154,7 @@ export default function JobSearchPage() {
         <Drawer opened={opened} onClose={close} position='top'>
           {filtersBox}
         </Drawer>
-        <Button onClick={open} className={classes.openFilters}>Фильтры</Button>
+        <Button onClick={open} className={classes.openFilters}>Фильтры ({getNumOfFiltersSelected()})</Button>
 
         <Box className={classes.initFilters}>
           {filtersBox}
