@@ -6,6 +6,12 @@ export type AuthorizationData = {
   hr: string;
 };
 
+export type RefreshAuthorisationData = {
+  refresh_token: string;
+  client_id: string;
+  client_secret: string;
+};
+
 export type Token = {
   access_token: string;
   refresh_token: string;
