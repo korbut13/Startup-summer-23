@@ -4,7 +4,6 @@ import { url } from '../url';
 import { authorizationData } from '../authorisation';
 import { refreshAuthorisationData } from '../authorisation';
 
-
 async function getToken(url: string, authorData: AuthorizationData) {
   const authorDataString = new URLSearchParams(authorData).toString();
   return await fetch(`${url}/2.0/oauth2/password/?${authorDataString}`, {

@@ -54,7 +54,6 @@ export default function Filters({
         ta="start"
         type="number"
         min={0}
-        max={+paymentToValue}
         label="Оклад"
         placeholder="От"
         value={paymentFromValue.length === 0 ? '' : +paymentFromValue}
