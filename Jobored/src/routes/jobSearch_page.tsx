@@ -18,6 +18,7 @@ import getNumOfFiltersSelected from '../utils/getNumOfFiltersSelected';
 
 
 const catalogBranches = catalogBranchesInit;
+
 const initialInputValues = {
   keyword: '',
   payment_from: '',
@@ -32,14 +33,16 @@ const initialDataFilters = {
   catalogues: '',
 };
 
-export default function JobSearchPage() {
-  setInitValuesFromUrl(initialInputValues, initialDataFilters, catalogBranches);
+const initialActivePage = { activePage: 1 };
 
+
+export default function JobSearchPage() {
+  setInitValuesFromUrl(initialInputValues, initialDataFilters, catalogBranches, initialActivePage);
   const navigate = useNavigate();
   const { classes } = useStyles();
   const [opened, { open, close }] = useDisclosure(false);
-  const [activePage, setActivePage] = React.useState(1);
   const [amountPages, setAmountPages] = React.useState(0);
+  const [activePage, setActivePage] = React.useState(initialActivePage.activePage);
   const [loading, setLoading] = React.useState(true)
   const [catalogVacancies, setCatalogVacancies] = React.useState<Vacancy[]>([]);
   const [inputValues, setInputValues] = React.useState<InitialInputValues>(initialInputValues);
@@ -81,17 +84,7 @@ export default function JobSearchPage() {
     });
   };
 
-  const filtersBox = <Box
-    sx={(theme) => ({
-      backgroundColor: 'white',
-      textAlign: 'center',
-      padding: "19px 20px",
-      borderRadius: theme.radius.md,
-      border: '1px solid #EAEBED',
-      width: '275px',
-      maxHeight: 320,
-    })}
-  >
+  const filtersBox = <Box className={classes.filtersBox}>
     <Filters
       catalogBranches={catalogBranches}
       branchName={inputValues.catalogues}

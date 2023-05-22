@@ -5,7 +5,7 @@ export default function Root() {
   return (
     <>
       <HeaderComponent />
-      <div id="detail">
+      <div id="detail" style={{ padding: "39px 0px 51px" }}>
         <Outlet></Outlet>
       </div>
     </>

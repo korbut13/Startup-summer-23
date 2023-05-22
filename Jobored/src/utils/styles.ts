@@ -24,7 +24,6 @@ export const useStyles = createStyles((theme) => ({
   },
   link: {
     width: "24.4%",
-    letterSpacing: "0.2px",
     [theme.fn.smallerThan("md")]: {
       width: "50%",
     },
@@ -52,7 +51,7 @@ export const useStyles = createStyles((theme) => ({
       display: "none"
     }
   },
-  searchInput: {
+  searchButton: {
     position: "absolute",
     top: "8px",
     right: "12px",
@@ -75,6 +74,19 @@ export const useStyles = createStyles((theme) => ({
       display: "none"
     }
   },
+  filtersBox: {
+    backgroundColor: 'white',
+    textAlign: 'center',
+    padding: "18px 20px",
+    borderRadius: theme.radius.md,
+    border: '1px solid #EAEBED',
+    width: '274px',
+    maxHeight: 320,
+    [theme.fn.smallerThan("sm")]: {
+      width: '90%',
+      margin: "0 auto"
+    }
+  },
   select: {
     label: {
       ...fontInterBold,
@@ -90,6 +102,9 @@ export const useStyles = createStyles((theme) => ({
       fontSize: "14px",
       fontWeight: 400,
       lineHeight: "20px",
+    },
+    [theme.fn.smallerThan("sm")]: {
+
     }
   },
   resetFilters: {
@@ -118,11 +133,17 @@ export const useStyles = createStyles((theme) => ({
       lineHeight: "20px",
     }
   },
-  paper: {
+  vacancyPaper: {
+    borderRadius: "12px",
+    border: "1px solid #EAEBED",
+    marginBottom: "19px",
+    padding: "23px 22px 23px 23px",
+  },
+  vacanciesPaper: {
     borderRadius: "12px",
     border: "1px solid #EAEBED",
     marginBottom: "16px",
-    padding: "23px 22px 21px 23px",
+    padding: "23px 22px 23px 22px",
   },
   group: {
     flexWrap: 'nowrap',
@@ -148,7 +169,7 @@ export const useStyles = createStyles((theme) => ({
     lineHeight: "24px",
     letterSpacing: "0.2px",
     color: "#5E96FC",
-    marginBottom: "13px",
+    marginBottom: "14px",
     [theme.fn.smallerThan("xs")]: {
       fontSize: "15px",
       marginBottom: "8px",
@@ -163,7 +184,7 @@ export const useStyles = createStyles((theme) => ({
     }
   },
   vacanciesIconAndTown: {
-    marginTop: "13px",
+    marginTop: "12px",
     gap: "8px",
     [theme.fn.smallerThan("xs")]: {
       gap: "3px",
@@ -220,8 +241,7 @@ export const useStyles = createStyles((theme) => ({
       }
     },
     p: {
-      ...fontInterBold,
-      fontSize: "20px",
+      ...fontInter,
       margin: "0px",
       [theme.fn.smallerThan("xs")]: {
         fontSize: "14px",

@@ -16,22 +16,24 @@ export default function SearchInput({
   return (
     <>
       <Group >
-        <Input.Wrapper w="100%" style={{ display: "block", position: "relative" }}>
+        <Input.Wrapper w="100%" style={{ display: "block", position: "relative", marginBottom: "16px" }}>
           <Input
             data-elem="search-input"
             icon={<Search size="1.19rem" />}
             placeholder="Введите название вакансии"
             value={value}
             onChange={onChange}
+
             styles={{
-              input: { borderRadius: "8px", borderColor: "#EAEBED", height: "48px", width: "100%", marginBottom: "17px", fontWeight: 400, fontSize: "14px", lineHeight: "21px", fontFamily: "Inter", },
+              input: {
+                borderRadius: "8px", borderColor: "#EAEBED", height: "48px", fontSize: "14px", lineHeight: "21px", fontFamily: "Inter",
+              },
             }}
           />
           <Button data-elem="search-button" onClick={sendFilters}
-            className={classes.searchInput}
+            className={classes.searchButton}
           >Поиск</Button>
         </Input.Wrapper>
-
       </Group >
     </>
   );

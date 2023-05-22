@@ -1,9 +1,13 @@
 export type AuthorizationData = {
-  login: string;
-  password: string;
   client_id: string;
   client_secret: string;
   hr: string;
+};
+
+export type RefreshAuthorisationData = {
+  refresh_token: string;
+  client_id: string;
+  client_secret: string;
 };
 
 export type Token = {

@@ -14,8 +14,8 @@ async function getCatalogues() {
     .then((response: Branch[]) => {
       const changedCatalogBranches = response.map((branch) => {
         return {
-          label: branch.title_trimmed,
-          value: branch.title_trimmed,
+          label: branch.title_rus,
+          value: branch.title_rus,
           catalogues: branch.key,
         };
       });

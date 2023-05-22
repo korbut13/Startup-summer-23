@@ -53,6 +53,7 @@ export default function Filters({
         data-elem="salary-from-input"
         ta="start"
         type="number"
+        min={0}
         label="Оклад"
         placeholder="От"
         value={paymentFromValue.length === 0 ? '' : +paymentFromValue}
@@ -67,6 +68,7 @@ export default function Filters({
       <NumberInput
         data-elem="salary-to-input"
         type="number"
+        min={+paymentFromValue}
         placeholder="До"
         value={paymentToValue.length === 0 ? '' : +paymentToValue}
         onChange={onChangePaymentTo}
