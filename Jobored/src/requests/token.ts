@@ -1,26 +1,7 @@
-import { AuthorizationData, Token } from '../types';
+import { Token } from '../types';
 import { RefreshAuthorisationData } from '../types';
 import { url } from '../url';
 import { authorizationData } from '../authorisation';
-import { refreshAuthorisationData } from '../authorisation';
-
-async function getToken(url: string, authorData: AuthorizationData) {
-  const authorDataString = new URLSearchParams(authorData).toString();
-  return await fetch(`${url}/2.0/oauth2/password/?${authorDataString}`, {
-    method: 'GET',
-    headers: {
-      'x-secret-key': 'GEU4nvd3rej*jeh.eqp',
-    },
-  })
-    .then((response) => {
-      return response.json()
-    })
-    .then((token: Token) => {
-      localStorage.setItem('access_token', token.access_token);
-      localStorage.setItem('refresh_token', token.refresh_token);
-      localStorage.setItem('ttl', `${token.ttl}`);
-    });
-};
 
 async function updateToken(url: string, refreshAuthorData: RefreshAuthorisationData) {
   const refreshAuthorDataString = new URLSearchParams(refreshAuthorData).toString();
@@ -38,17 +19,23 @@ async function updateToken(url: string, refreshAuthorData: RefreshAuthorisationD
     });
 };
 
+const defaultTtl = 1685360849;
+const defaultAccessToken = "v3.r.137440105.38e5e6adf67b93f4aca3d391ebe6fae7068e9838.bdc61b8b343cafc07423910f09ff1eaf6f9c494d";
+const defaultRefreshToken = "v3.r.137440105.deb036b56e1f469011c1fb60bb195bad88cb5514.30a8ab9d1ce049b512002257cae83b0426492708"
+
+const refreshAuthorisationData: RefreshAuthorisationData = {
+  refresh_token: localStorage.getItem('refresh_token') || defaultRefreshToken,
+  client_id: authorizationData.client_id,
+  client_secret: authorizationData.client_secret
+}
+
 async function getAccessToken() {
-  if (localStorage.getItem('access_token')) {
-    const ttl = localStorage.getItem('ttl')!;
-    if (Date.now() / 1000 > +ttl) {
-      await updateToken(url, refreshAuthorisationData);
-    }
-  } else {
-    await getToken(url, authorizationData);
+  let actualAccessToken = localStorage.getItem("access_token") || defaultAccessToken;
+  let actualTtl = localStorage.getItem("ttl") || defaultTtl;
+  if (Date.now() / 1000 > +actualTtl) {
+    await updateToken(url, refreshAuthorisationData);
   }
-  const access_token = localStorage.getItem('access_token')!;
-  return access_token;
+  return actualAccessToken;
 }
 
 export const token = await getAccessToken();

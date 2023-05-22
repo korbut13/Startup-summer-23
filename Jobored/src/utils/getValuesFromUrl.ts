@@ -11,8 +11,7 @@ export default function setInitValuesFromUrl(initialInputValues: InitialInputVal
       initialInputValues[key as keyof typeof initialInputValues] = selectedBranch as string;
       initialDataFilters.catalogues = params.catalogues as string;
     } else if (key === "activePage") {
-      initialActivePage.activePage = 3;
-      console.log("1")
+      initialActivePage.activePage = Number(params.activePage);
     } else {
       initialInputValues[key as keyof typeof initialInputValues] = params[key as keyof typeof params] as string;
       initialDataFilters[key as keyof typeof initialDataFilters] = params[key as keyof typeof params] as string;

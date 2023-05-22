@@ -35,10 +35,9 @@ const initialDataFilters = {
 
 const initialActivePage = { activePage: 1 };
 
+
 export default function JobSearchPage() {
   setInitValuesFromUrl(initialInputValues, initialDataFilters, catalogBranches, initialActivePage);
-  console.log("2")
-
   const navigate = useNavigate();
   const { classes } = useStyles();
   const [opened, { open, close }] = useDisclosure(false);
