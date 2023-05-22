@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import Root from './routes/Root';
+import Root from './routes/root';
 import './index.css';
 import JobSearchPage from './routes/jobSearch_page';
 import ErrorPage from './routes/error-page';
