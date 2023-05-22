@@ -5,7 +5,7 @@ export function LackOfVacancies() {
   return (
     <Group style={{ flexDirection: 'column' }} mt="10.4%">
       <Seeker />
-      <Text ff="Inter" fw={700} fz={24} c="#343A40;" lts="0.2px" mb="0.8rem" mt="0.7rem">
+      <Text ff="InterBold" fw={700} fz={24} c="#343A40;" lh="24px" mb="1.2rem" mt="1.2rem">
         Упс, здесь еще ничего нет!
       </Text>
       <Button component="a" href="/" variant="light"

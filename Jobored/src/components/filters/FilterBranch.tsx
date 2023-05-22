@@ -28,8 +28,12 @@ export default function FilterBranch({
           pointerEvents: 'none',
           width: "2.875rem",
         },
+        item: {
+          whiteSpace: "initial"
+        }
       }}
       data={catalogBranches}
+      dropdownPosition="bottom"
     />
   );
 }

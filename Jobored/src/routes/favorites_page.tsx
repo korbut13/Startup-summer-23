@@ -47,8 +47,6 @@ export default function FavoritesVacanciesPage() {
             setAmountPages(Math.ceil(response.total / 4));
             setCatalogVacancies(response.objects);
             setAmountVacOnPage(response.objects.length);
-            // console.log("vacancies",)
-            // console.log("",)
             setLoading(false)
           });
     } catch (error: unknown) {
@@ -92,7 +90,7 @@ export default function FavoritesVacanciesPage() {
             total={amountPages}
             value={activePage}
             onChange={setActivePage}
-            style={{ justifyContent: 'center', marginTop: "87px" }}
+            style={{ justifyContent: 'center', marginTop: "85px" }}
           />
         ) : (
           ''

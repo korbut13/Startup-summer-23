@@ -4,6 +4,9 @@ export default function getStyle(vacancyParam: string) {
   const { classes } = useStyles();
   if (window.location.href.includes('vacancy')) {
     switch (vacancyParam) {
+      case "paper":
+        return classes.vacancyPaper;
+        break;
       case "profession":
         return classes.vacancyProfession;
         break;
@@ -24,6 +27,9 @@ export default function getStyle(vacancyParam: string) {
     }
   } else {
     switch (vacancyParam) {
+      case "paper":
+        return classes.vacanciesPaper;
+        break;
       case "profession":
         return classes.vacanciesProfession;
         break;

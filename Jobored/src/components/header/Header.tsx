@@ -25,10 +25,11 @@ export default function App() {
       onClick={() => setActive(index)}
       variant="subtle"
       className={classes.link}
+      styles={{ label: { fontSize: "16px", fontFamily: "Inter", fontWeight: 500, lineHeight: 0 } }}
     />
   ))
   return (
-    <Header height={87} mb={38} >
+    <Header height={86}>
       <Container size={1116} className={classes.header}>
         <Card sx={{ display: "flex", gap: "0.8rem" }} pl={0} component="a" href="/">
           <Logo />

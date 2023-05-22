@@ -81,17 +81,7 @@ export default function JobSearchPage() {
     });
   };
 
-  const filtersBox = <Box
-    sx={(theme) => ({
-      backgroundColor: 'white',
-      textAlign: 'center',
-      padding: "19px 20px",
-      borderRadius: theme.radius.md,
-      border: '1px solid #EAEBED',
-      width: '275px',
-      maxHeight: 320,
-    })}
-  >
+  const filtersBox = <Box className={classes.filtersBox}>
     <Filters
       catalogBranches={catalogBranches}
       branchName={inputValues.catalogues}

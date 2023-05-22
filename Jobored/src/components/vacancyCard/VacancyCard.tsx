@@ -18,7 +18,7 @@ export function VacancyCard({
   const { classes } = useStyles();
   return (
     <>
-      <Paper className={classes.paper}>
+      <Paper className={getStyle("paper")}>
         <Group className={classes.group}>
           <Card
             data-elem={`vacancy-${vacancy.id}`}
@@ -29,7 +29,7 @@ export function VacancyCard({
             <Text className={getStyle("profession")}>
               {vacancy.profession} ({vacancy.firm_name})
             </Text>
-            <Group>
+            <Group spacing="1.05rem">
               <Text className={getStyle("payment")}>
                 {createPaymentString(vacancy.payment_from, vacancy.payment_to, vacancy.currency)}
               </Text >
@@ -44,11 +44,12 @@ export function VacancyCard({
           <Button
             data-elem={`vacancy-${vacancy.id}-shortlist-button`}
             variant="subtle"
+            styles={{ label: { alignItems: "flex-start" }, root: { paddingRight: "0px" } }}
             onClick={() => changeFavorite(vacancy.id)}>
             <FavoriteIcon favoriteVacancies={favoriteVacancies} idVacancy={vacancy.id} />
           </Button>
         </Group>
-      </Paper>
+      </Paper >
     </>
   );
 }
