@@ -5,6 +5,7 @@ import { Vacancy } from '../../types';
 import FavoriteIcon from './FavoriteIcon';
 import { useStyles } from '../../utils/styles';
 import getStyle from '../../utils/getStyle';
+import { Link } from 'react-router-dom';
 
 export function VacancyCard({
   vacancy,
@@ -22,8 +23,8 @@ export function VacancyCard({
         <Group className={classes.group}>
           <Card
             data-elem={`vacancy-${vacancy.id}`}
-            component={window.location.href.includes('vacancy') ? "div" : "a"}
-            href="/vacancy" p={0} onClick={() => localStorage.setItem("idVacancy", `${vacancy.id}`)}
+            component={Link}
+            to="/vacancy" p={0} onClick={() => localStorage.setItem("idVacancy", `${vacancy.id}`)}
             style={{ width: "90%" }}
           >
             <Text className={getStyle("profession")}>
