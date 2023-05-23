@@ -58,9 +58,8 @@ export default function Filters({
         placeholder="От"
         value={paymentFromValue.length === 0 ? '' : +paymentFromValue}
         onChange={onChangePaymentFrom}
-        className={classes.numberInputFrom}
+        className={classes.numberInput}
         styles={{
-          control: { border: 'none', color: '#ACADB9', justifyContent: 'flex-start' },
           controlUp: { alignItems: 'flex-end' },
           controlDown: { alignItems: 'flex-start' },
         }}
@@ -72,17 +71,8 @@ export default function Filters({
         placeholder="До"
         value={paymentToValue.length === 0 ? '' : +paymentToValue}
         onChange={onChangePaymentTo}
+        className={classes.numberInput}
         styles={{
-          input: {
-            borderRadius: '8px',
-            marginBottom: '20px',
-            height: '42px',
-            fontWeight: 400,
-            fontSize: '14px',
-            lineHeight: '20px',
-            fontFamily: 'Inter',
-          },
-          control: { border: 'none', color: '#ACADB9', justifyContent: 'flex-start' },
           controlUp: { alignItems: 'flex-end' },
           controlDown: { alignItems: 'flex-start' },
         }}
@@ -90,15 +80,7 @@ export default function Filters({
       <Button
         data-elem="search-button"
         type="submit"
-        sx={{
-          fontFamily: 'Inter',
-          fontWeight: 500,
-          fontSize: '14px',
-          height: '40px',
-          borderRadius: '8px',
-          background: '#5E96FC',
-          width: '100%',
-        }}
+        className={classes.buttonApply}
         onClick={sendFilters}
       >
         Применить

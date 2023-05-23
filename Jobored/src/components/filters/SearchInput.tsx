@@ -26,16 +26,7 @@ export default function SearchInput({
             placeholder="Введите название вакансии"
             value={value}
             onChange={onChange}
-            styles={{
-              input: {
-                borderRadius: '8px',
-                borderColor: '#EAEBED',
-                height: '48px',
-                fontSize: '14px',
-                lineHeight: '21px',
-                fontFamily: 'Inter',
-              },
-            }}
+            className={classes.searchInput}
           />
           <Button data-elem="search-button" onClick={sendFilters} className={classes.searchButton}>
             Поиск

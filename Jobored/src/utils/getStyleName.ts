@@ -1,6 +1,6 @@
 import { UseStyles } from './styles';
 
-export default function getStyle(vacancyParam: string) {
+export default function getStyleName(vacancyParam: string) {
   const { classes } = UseStyles();
   if (window.location.href.includes('vacancy')) {
     switch (vacancyParam) {

@@ -50,6 +50,19 @@ export const UseStyles = createStyles((theme) => ({
       display: 'none',
     },
   },
+  searchInput: {
+    input: {
+      borderRadius: '8px',
+      borderColor: '#EAEBED',
+      height: '48px',
+      fontSize: '14px',
+      lineHeight: '21px',
+      fontFamily: 'Inter',
+      [theme.fn.smallerThan('xs')]: {
+        fontSize: '12px',
+      },
+    },
+  },
   searchButton: {
     position: 'absolute',
     top: '8px',
@@ -112,7 +125,7 @@ export const UseStyles = createStyles((theme) => ({
     paddingRight: '0px',
     height: 'auto',
   },
-  numberInputFrom: {
+  numberInput: {
     label: {
       ...fontInterBold,
       fontSize: '16px',
@@ -127,6 +140,30 @@ export const UseStyles = createStyles((theme) => ({
       fontSize: '14px',
       fontWeight: 400,
       lineHeight: '20px',
+    },
+    button: {
+      border: 'none',
+      color: '#ACADB9',
+      justifyContent: 'flex-start',
+    },
+  },
+  buttonApply: {
+    fontFamily: 'Inter',
+    fontWeight: 500,
+    fontSize: '14px',
+    height: '40px',
+    borderRadius: '8px',
+    background: '#5E96FC',
+    width: '100%',
+    marginTop: '11px',
+  },
+  favoriteButton: {
+    paddingRight: '0px',
+    span: {
+      alignItems: 'flex-start',
+    },
+    '&:hover': {
+      backgroundColor: 'white',
     },
   },
   vacancyPaper: {
@@ -252,6 +289,30 @@ export const UseStyles = createStyles((theme) => ({
     [theme.fn.smallerThan('xs')]: {
       fontSize: '14px',
       padding: '15px',
+    },
+  },
+  lackOfVacancies: {
+    ...fontInterBold,
+    fontSize: '24px',
+    color: '#343A40;',
+    lineHeight: '24px',
+    marginBottom: '1.2rem',
+    marginTop: '1.1rem',
+    [theme.fn.smallerThan('xs')]: {
+      fontSize: '17px',
+    },
+  },
+  buttonToJobSearch: {
+    borderRadius: '8px',
+    background: '#DEECFF',
+    padding: '0px 23px',
+    height: '43px',
+    div: {
+      fontSize: '14px',
+      fontFamily: 'OpenSans',
+      fontWeight: 600,
+      lineHeight: '155%',
+      letterSpacing: '0.3px',
     },
   },
 }));
