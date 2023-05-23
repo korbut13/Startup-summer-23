@@ -8,6 +8,12 @@ import ErrorPage from './routes/error-page';
 import FavoritesVacanciesPage from './routes/favorites_page';
 import VacancyPage from './routes/vacancy_page';
 
+export enum AppRoutes {
+  ROOT = '/',
+  FAVORITES = '/favorites',
+  VACANCY = '/vacancy',
+}
+
 const router = createBrowserRouter([
   {
     path: '/',
@@ -15,15 +21,15 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     children: [
       {
-        path: '/',
+        path: AppRoutes.ROOT,
         element: <JobSearchPage />,
       },
       {
-        path: 'favorites',
+        path: AppRoutes.FAVORITES,
         element: <FavoritesVacanciesPage />,
       },
       {
-        path: 'vacancy',
+        path: AppRoutes.VACANCY,
         element: <VacancyPage />,
       },
     ],

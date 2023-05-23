@@ -1,10 +1,12 @@
+import React from 'react';
 import { Group, Text, Button, NumberInput } from '@mantine/core';
-import { CloseIcon } from './_closeIcon';
-import FilterBranch from './FilterBranch';
-import { BranchParams } from '../../types';
-import { UseStyles } from '../../utils/styles';
 
-export default function Filters({
+import { CloseIcon } from './_closeIcon';
+import { FilterBranch } from './FilterBranch';
+import { UseStyles } from '../../utils/styles';
+import { FilterProps } from '../../utils/interfaces';
+
+export const Filters: React.FC<FilterProps> = ({
   catalogBranches,
   branchName,
   onChangeBranch,
@@ -14,17 +16,7 @@ export default function Filters({
   onChangePaymentTo,
   sendFilters,
   clearFilters,
-}: {
-  catalogBranches: BranchParams[];
-  branchName: string;
-  onChangeBranch: (value: string) => void;
-  paymentFromValue: string;
-  onChangePaymentFrom: (value: number) => void;
-  paymentToValue: string;
-  onChangePaymentTo: (value: number) => void;
-  sendFilters: () => void;
-  clearFilters: () => void;
-}) {
+}) => {
   const { classes } = UseStyles();
   return (
     <>
@@ -32,6 +24,7 @@ export default function Filters({
         <Text fz="20px" ff="InterBold" fw={700} lh="20px">
           Фильтры
         </Text>
+
         <Button
           onClick={clearFilters}
           rightIcon={<CloseIcon />}
@@ -87,4 +80,4 @@ export default function Filters({
       </Button>
     </>
   );
-}
+};

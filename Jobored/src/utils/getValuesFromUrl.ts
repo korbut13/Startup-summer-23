@@ -1,7 +1,7 @@
 import qs from 'qs';
-import { InitialInputValues } from '../types';
-import { InitialDataFilters } from '../types';
-import { BranchParams } from '../types';
+import { InitialInputValues } from './types';
+import { InitialDataFilters } from './types';
+import { BranchParams } from './types';
 
 export default function setInitValuesFromUrl(
   initialInputValues: InitialInputValues,

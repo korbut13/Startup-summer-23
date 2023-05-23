@@ -1,21 +1,20 @@
-import { url } from '../url';
-import { InitialDataFilters } from '../types';
+import qs from 'qs';
+
+import { url } from './url';
+import { InitialDataFilters } from './types';
+
+const ITEMS_PER_PAGE = 4;
 
 export default function createUrlToVacancies(dataFilters: InitialDataFilters, activePage: number) {
-  let pathUrl = `${url}/2.0/vacancies/?page=${activePage - 1}&count=4&`;
-  pathUrl =
-    dataFilters.payment_from.length > 0 || dataFilters.payment_to.length > 0
-      ? pathUrl + 'no_agreement=1&'
-      : pathUrl;
+  const queryString = qs.stringify({
+    page: activePage - 1,
+    count: ITEMS_PER_PAGE,
+    ...((dataFilters.payment_from.length > 0 || dataFilters.payment_to.length > 0) && {
+      no_agreement: 1,
+    }),
+    ...dataFilters,
+  });
 
-  for (const key in dataFilters) {
-    if (
-      dataFilters[key as keyof typeof dataFilters] &&
-      dataFilters[key as keyof typeof dataFilters] != '0'
-    ) {
-      pathUrl = pathUrl + `${key}=${dataFilters[key as keyof typeof dataFilters]}&`;
-    }
-    pathUrl;
-  }
-  return pathUrl.slice(0, -1);
+  const pathUrl = `${url}/2.0/vacancies/?${queryString}`;
+  return pathUrl;
 }

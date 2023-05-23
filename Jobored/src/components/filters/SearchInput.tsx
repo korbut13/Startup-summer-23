@@ -1,17 +1,11 @@
 import React from 'react';
 import { Input, Button, Group } from '@mantine/core';
+
+import { SearchInputProps } from '../../utils/interfaces';
 import { Search } from 'tabler-icons-react';
 import { UseStyles } from '../../utils/styles';
 
-export default function SearchInput({
-  value,
-  onChange,
-  sendFilters,
-}: {
-  value: string;
-  onChange: (event: React.ChangeEvent) => void;
-  sendFilters: () => void;
-}) {
+export const SearchInput: React.FC<SearchInputProps> = ({ value, onChange, sendFilters }) => {
   const { classes } = UseStyles();
   return (
     <>
@@ -35,4 +29,4 @@ export default function SearchInput({
       </Group>
     </>
   );
-}
+};

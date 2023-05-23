@@ -1,17 +1,15 @@
+import React from 'react';
 import { Select } from '@mantine/core';
+
+import { FilterBranchProps } from '../../utils/interfaces';
 import { ChevronDown } from 'tabler-icons-react';
-import { BranchParams } from '../../types';
 import { UseStyles } from '../../utils/styles';
 
-export default function FilterBranch({
+export const FilterBranch: React.FC<FilterBranchProps> = ({
   catalogBranches,
   value,
   onChangeBranch,
-}: {
-  catalogBranches: BranchParams[];
-  value: string;
-  onChangeBranch: (value: string) => void;
-}) {
+}) => {
   const { classes } = UseStyles();
   return (
     <Select
@@ -36,4 +34,4 @@ export default function FilterBranch({
       dropdownPosition="bottom"
     />
   );
-}
+};

@@ -1,5 +1,6 @@
-import { Seeker } from './_seeker';
 import { Group, Text, Button } from '@mantine/core';
+
+import { Seeker } from './_seeker';
 import { UseStyles } from '../../utils/styles';
 
 export function LackOfVacancies() {

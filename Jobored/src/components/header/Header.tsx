@@ -11,8 +11,10 @@ import {
   Burger,
   MediaQuery,
 } from '@mantine/core';
+
 import { Logo } from './_logo';
 import { UseStyles } from '../../utils/styles';
+import { AppRoutes } from '../../main';
 
 const dataLinks = [
   { label: 'Поиск Вакансий', path: '/' },
@@ -41,12 +43,13 @@ export default function App() {
   return (
     <Header height={86}>
       <Container size={1116} className={classes.header}>
-        <Card sx={{ display: 'flex', gap: '0.8rem' }} pl={0} component="a" href="/">
+        <Card sx={{ display: 'flex', gap: '0.8rem' }} pl={0} component={Link} to={AppRoutes.ROOT}>
           <Logo />
           <Title order={1} fz="24px" fw={600} lts="-0.04em" sx={{ fontFamily: 'Poppins' }}>
             Jobored
           </Title>
         </Card>
+
         <MediaQuery largerThan="xs" styles={{ display: 'none' }}>
           <Menu shadow="md" width={220}>
             <Menu.Target>
@@ -55,6 +58,7 @@ export default function App() {
             <Menu.Dropdown>{navLinks}</Menu.Dropdown>
           </Menu>
         </MediaQuery>
+
         <Group w="63.3%" noWrap className={classes.navLinks}>
           {navLinks}
         </Group>

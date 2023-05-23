@@ -2,19 +2,21 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Box, Container, Pagination, Loader, Drawer, Button } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import Filters from '../components/filters/Filters';
-import SearchInput from '../components/filters/SearchInput';
-import { VacancyCard } from '../components/vacancyCard/VacancyCard';
+
 import { authorizationData } from '../authorisation';
 import { token } from '../requests/token';
-import createUrlToVacancies from '../utils/createUrlToVacancies';
-import { InitialInputValues } from '../types';
-import { Vacancy } from '../types';
+import { Filters } from '../components/filters/Filters';
+import { SearchInput } from '../components/filters/SearchInput';
+import { VacancyCard } from '../components/vacancyCard/VacancyCard';
 import { LackOfVacancies } from '../components/lack-of-vacancies/LackOfVacancies';
-import { UseStyles } from '../utils/styles';
-import { catalogBranchesInit } from '../requests/getCatalogues';
+import { InitialInputValues, Vacancy } from '../utils/types';
+
+import { getFavoriteVacancies } from '../utils/getFavoriteVacancies';
+import createUrlToVacancies from '../utils/createUrlToVacancies';
 import setInitValuesFromUrl from '../utils/getValuesFromUrl';
 import getNumOfFiltersSelected from '../utils/getNumOfFiltersSelected';
+import { catalogBranchesInit } from '../requests/getCatalogues';
+import { UseStyles } from '../utils/styles';
 
 const catalogBranches = catalogBranchesInit;
 
@@ -24,6 +26,7 @@ const initialInputValues = {
   payment_to: '',
   catalogues: '',
 };
+
 const initialDataFilters = {
   published: '1',
   keyword: '',
@@ -45,9 +48,7 @@ export default function JobSearchPage() {
   const [catalogVacancies, setCatalogVacancies] = React.useState<Vacancy[]>([]);
   const [inputValues, setInputValues] = React.useState<InitialInputValues>(initialInputValues);
   const [dataFilters, setDataFilters] = React.useState(initialDataFilters);
-  const [favorite, setFavorite] = React.useState<number[]>(
-    JSON.parse(localStorage.getItem('favoriteVacancies') || '[]')
-  );
+  const [favorite, setFavorite] = React.useState<number[]>(getFavoriteVacancies());
 
   const sendFilters = () => {
     const selectedBranch = catalogBranches.filter(
@@ -80,6 +81,25 @@ export default function JobSearchPage() {
       }
       return tempState;
     });
+  };
+
+  const changeSearchInputValue = (event: React.ChangeEvent) => {
+    setInputValues((prevState) => ({
+      ...prevState,
+      keyword: (event.target as HTMLInputElement).value,
+    }));
+  };
+
+  const changeFavorite = (id: number) => {
+    const index = favorite.indexOf(id);
+    let nextState: number[] = [];
+    if (index === -1) {
+      nextState = [...favorite, id];
+    } else {
+      nextState = favorite.filter((f) => f !== id);
+    }
+    setFavorite(nextState);
+    localStorage.setItem('favoriteVacancies', JSON.stringify(nextState));
   };
 
   const filtersBox = (
@@ -153,19 +173,17 @@ export default function JobSearchPage() {
           <Drawer opened={opened} onClose={close} position="top">
             {filtersBox}
           </Drawer>
+
           <Button onClick={open} className={classes.openFilters}>
             Фильтры ({getNumOfFiltersSelected()})
           </Button>
+
           <Box className={classes.initFilters}>{filtersBox}</Box>
+
           <Box w="100%">
             <SearchInput
               value={inputValues.keyword}
-              onChange={(event: React.ChangeEvent) => {
-                setInputValues((prevState) => ({
-                  ...prevState,
-                  keyword: (event.target as HTMLInputElement).value,
-                }));
-              }}
+              onChange={changeSearchInputValue}
               sendFilters={sendFilters}
             />
             {catalogVacancies.length === 0 && !loading ? (
@@ -178,29 +196,17 @@ export default function JobSearchPage() {
                   key={index}
                   vacancy={vacancy}
                   favoriteVacancies={favorite}
-                  changeFavorite={(id: number) => {
-                    const index = favorite.indexOf(id);
-                    let nextState: number[] = [];
-                    if (index === -1) {
-                      nextState = [...favorite, id];
-                    } else {
-                      nextState = favorite.filter((f) => f !== id);
-                    }
-                    setFavorite(nextState);
-                    localStorage.setItem('favoriteVacancies', JSON.stringify(nextState));
-                  }}
+                  changeFavorite={changeFavorite}
                 />
               ))
             )}
-            {amountPages > 1 && !loading ? (
+            {amountPages > 1 && !loading && (
               <Pagination
                 total={amountPages}
                 value={activePage}
                 onChange={setActivePage}
                 style={{ justifyContent: 'center', marginTop: '38px' }}
               />
-            ) : (
-              ''
             )}
           </Box>
         </Container>

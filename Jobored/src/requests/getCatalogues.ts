@@ -1,6 +1,6 @@
-import { url } from '../url';
+import { url } from '../utils/url';
 import { authorizationData } from '../authorisation';
-import { Branch } from '../types';
+import { Branch } from '../utils/types';
 
 async function getCatalogues() {
   return await fetch(`${url}/2.0/catalogues/`, {

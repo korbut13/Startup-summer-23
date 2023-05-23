@@ -1,6 +1,6 @@
-import { Token } from '../types';
-import { RefreshAuthorisationData } from '../types';
-import { url } from '../url';
+import { Token } from '../utils/types';
+import { RefreshAuthorisationData } from '../utils/types';
+import { url } from '../utils/url';
 import { authorizationData } from '../authorisation';
 
 async function updateToken(url: string, refreshAuthorData: RefreshAuthorisationData) {

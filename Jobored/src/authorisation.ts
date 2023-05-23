@@ -1,4 +1,4 @@
-import { AuthorizationData } from './types';
+import { AuthorizationData } from './utils/types';
 
 export const authorizationData: AuthorizationData = {
   client_id: '2356',
