@@ -149,21 +149,25 @@ export default function JobSearchPage() {
 
   React.useEffect(() => {
     setLoading(true);
-    fetch(createUrlToVacancies(dataFilters, activePage), {
-      method: 'GET',
-      headers: {
-        'x-secret-key': 'GEU4nvd3rej*jeh.eqp',
-        'X-Api-App-Id': `${authorizationData.client_secret}`,
-        Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json',
-      },
-    })
-      .then((response) => response.json())
-      .then((response: { objects: Vacancy[]; total: number }) => {
-        setAmountPages(response.total > 500 ? 125 : Math.ceil(response.total / 4));
-        setCatalogVacancies(response.objects);
-        setLoading(false);
-      });
+    try {
+      fetch(createUrlToVacancies(dataFilters, activePage), {
+        method: 'GET',
+        headers: {
+          'x-secret-key': 'GEU4nvd3rej*jeh.eqp',
+          'X-Api-App-Id': `${authorizationData.client_secret}`,
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      })
+        .then((response) => response.json())
+        .then((response: { objects: Vacancy[]; total: number }) => {
+          setAmountPages(response.total > 500 ? 125 : Math.ceil(response.total / 4));
+          setCatalogVacancies(response.objects);
+          setLoading(false);
+        });
+    } catch (error: unknown) {
+      console.error(error);
+    }
   }, [dataFilters, activePage]);
 
   return (
