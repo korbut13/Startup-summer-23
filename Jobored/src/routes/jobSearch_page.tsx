@@ -7,15 +7,14 @@ import SearchInput from '../components/filters/SearchInput';
 import { VacancyCard } from '../components/vacancyCard/VacancyCard';
 import { authorizationData } from '../authorisation';
 import { token } from '../requests/token';
-import createUrlString from '../utils/createUrlString';
+import createUrlToVacancies from '../utils/createUrlToVacancies';
 import { InitialInputValues } from '../types';
 import { Vacancy } from '../types';
 import { LackOfVacancies } from '../components/lack-of-vacancies/LackOfVacancies';
-import { useStyles } from '../utils/styles';
+import { UseStyles } from '../utils/styles';
 import { catalogBranchesInit } from '../requests/getCatalogues';
 import setInitValuesFromUrl from '../utils/getValuesFromUrl';
 import getNumOfFiltersSelected from '../utils/getNumOfFiltersSelected';
-
 
 const catalogBranches = catalogBranchesInit;
 
@@ -35,15 +34,14 @@ const initialDataFilters = {
 
 const initialActivePage = { activePage: 1 };
 
-
 export default function JobSearchPage() {
   setInitValuesFromUrl(initialInputValues, initialDataFilters, catalogBranches, initialActivePage);
   const navigate = useNavigate();
-  const { classes } = useStyles();
+  const { classes } = UseStyles();
   const [opened, { open, close }] = useDisclosure(false);
   const [amountPages, setAmountPages] = React.useState(0);
   const [activePage, setActivePage] = React.useState(initialActivePage.activePage);
-  const [loading, setLoading] = React.useState(true)
+  const [loading, setLoading] = React.useState(true);
   const [catalogVacancies, setCatalogVacancies] = React.useState<Vacancy[]>([]);
   const [inputValues, setInputValues] = React.useState<InitialInputValues>(initialInputValues);
   const [dataFilters, setDataFilters] = React.useState(initialDataFilters);
@@ -84,21 +82,23 @@ export default function JobSearchPage() {
     });
   };
 
-  const filtersBox = <Box className={classes.filtersBox}>
-    <Filters
-      catalogBranches={catalogBranches}
-      branchName={inputValues.catalogues}
-      onChangeBranch={(value: string) => setNewValues(value, 'catalogues')}
-      paymentFromValue={inputValues.payment_from}
-      onChangePaymentFrom={(value: number) => setNewValues(value, 'payment_from')}
-      paymentToValue={inputValues.payment_to}
-      onChangePaymentTo={(value: number) => setNewValues(value, 'payment_to')}
-      sendFilters={sendFilters}
-      clearFilters={() => {
-        window.location.search = '';
-      }}
-    />
-  </Box>
+  const filtersBox = (
+    <Box className={classes.filtersBox}>
+      <Filters
+        catalogBranches={catalogBranches}
+        branchName={inputValues.catalogues}
+        onChangeBranch={(value: string) => setNewValues(value, 'catalogues')}
+        paymentFromValue={inputValues.payment_from}
+        onChangePaymentFrom={(value: number) => setNewValues(value, 'payment_from')}
+        paymentToValue={inputValues.payment_to}
+        onChangePaymentTo={(value: number) => setNewValues(value, 'payment_to')}
+        sendFilters={sendFilters}
+        clearFilters={() => {
+          window.location.search = '';
+        }}
+      />
+    </Box>
+  );
 
   React.useEffect(() => {
     let searchParams = '?';
@@ -107,20 +107,29 @@ export default function JobSearchPage() {
       payment_from: dataFilters.payment_from,
       payment_to: dataFilters.payment_to,
       keyword: dataFilters.keyword,
-      activePage: activePage
+      activePage: activePage,
     };
     for (const key in filterParams) {
-      if (filterParams[key as keyof typeof filterParams] && filterParams[key as keyof typeof filterParams] != 0) {
-        searchParams = searchParams + `${key}=${filterParams[key as keyof typeof filterParams]}&`
-      } searchParams;
+      if (
+        filterParams[key as keyof typeof filterParams] &&
+        filterParams[key as keyof typeof filterParams] != 0
+      ) {
+        searchParams = searchParams + `${key}=${filterParams[key as keyof typeof filterParams]}&`;
+      }
+      searchParams;
     }
     navigate(searchParams.slice(0, -1));
-
-  }, [dataFilters.catalogues, dataFilters.payment_from, dataFilters.payment_to, dataFilters.keyword, activePage])
+  }, [
+    dataFilters.catalogues,
+    dataFilters.payment_from,
+    dataFilters.payment_to,
+    dataFilters.keyword,
+    activePage,
+  ]);
 
   React.useEffect(() => {
-    setLoading(true)
-    fetch(createUrlString(dataFilters, activePage), {
+    setLoading(true);
+    fetch(createUrlToVacancies(dataFilters, activePage), {
       method: 'GET',
       headers: {
         'x-secret-key': 'GEU4nvd3rej*jeh.eqp',
@@ -139,63 +148,62 @@ export default function JobSearchPage() {
 
   return (
     <>
-      {<Container
-        size={1116}
-        className={classes.container}
-      >
-        <Drawer opened={opened} onClose={close} position='top'>
-          {filtersBox}
-        </Drawer>
-        <Button onClick={open} className={classes.openFilters}>Фильтры ({getNumOfFiltersSelected()})</Button>
-
-        <Box className={classes.initFilters}>
-          {filtersBox}
-        </Box >
-        <Box w="100%">
-          <SearchInput
-            value={inputValues.keyword}
-            onChange={(event: React.ChangeEvent) => {
-              setInputValues((prevState) => ({
-                ...prevState,
-                keyword: (event.target as HTMLInputElement).value,
-              }));
-            }}
-            sendFilters={sendFilters}
-          />
-          {catalogVacancies.length === 0 && !loading ? (
-            <LackOfVacancies />
-          ) : loading ? <Loader size="xl" w="100%" mt="25%" /> : (
-            catalogVacancies.map((vacancy: Vacancy, index: number) => (
-              <VacancyCard
-                key={index}
-                vacancy={vacancy}
-                favoriteVacancies={favorite}
-                changeFavorite={(id: number) => {
-                  const index = favorite.indexOf(id);
-                  let nextState: number[] = [];
-                  if (index === -1) {
-                    nextState = [...favorite, id];
-                  } else {
-                    nextState = favorite.filter((f) => f !== id);
-                  }
-                  setFavorite(nextState);
-                  localStorage.setItem('favoriteVacancies', JSON.stringify(nextState));
-                }}
-              />
-            ))
-          )}
-          {amountPages > 1 && !loading ? (
-            <Pagination
-              total={amountPages}
-              value={activePage}
-              onChange={setActivePage}
-              style={{ justifyContent: 'center', marginTop: "38px" }}
+      {
+        <Container size={1116} className={classes.container}>
+          <Drawer opened={opened} onClose={close} position="top">
+            {filtersBox}
+          </Drawer>
+          <Button onClick={open} className={classes.openFilters}>
+            Фильтры ({getNumOfFiltersSelected()})
+          </Button>
+          <Box className={classes.initFilters}>{filtersBox}</Box>
+          <Box w="100%">
+            <SearchInput
+              value={inputValues.keyword}
+              onChange={(event: React.ChangeEvent) => {
+                setInputValues((prevState) => ({
+                  ...prevState,
+                  keyword: (event.target as HTMLInputElement).value,
+                }));
+              }}
+              sendFilters={sendFilters}
             />
-          ) : (
-            ''
-          )}
-        </Box>
-      </Container>
+            {catalogVacancies.length === 0 && !loading ? (
+              <LackOfVacancies />
+            ) : loading ? (
+              <Loader size="xl" w="100%" mt="25%" />
+            ) : (
+              catalogVacancies.map((vacancy: Vacancy, index: number) => (
+                <VacancyCard
+                  key={index}
+                  vacancy={vacancy}
+                  favoriteVacancies={favorite}
+                  changeFavorite={(id: number) => {
+                    const index = favorite.indexOf(id);
+                    let nextState: number[] = [];
+                    if (index === -1) {
+                      nextState = [...favorite, id];
+                    } else {
+                      nextState = favorite.filter((f) => f !== id);
+                    }
+                    setFavorite(nextState);
+                    localStorage.setItem('favoriteVacancies', JSON.stringify(nextState));
+                  }}
+                />
+              ))
+            )}
+            {amountPages > 1 && !loading ? (
+              <Pagination
+                total={amountPages}
+                value={activePage}
+                onChange={setActivePage}
+                style={{ justifyContent: 'center', marginTop: '38px' }}
+              />
+            ) : (
+              ''
+            )}
+          </Box>
+        </Container>
       }
     </>
   );

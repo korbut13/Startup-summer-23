@@ -1,6 +1,6 @@
-import { url } from "../url";
-import { authorizationData } from "../authorisation";
-import { Branch } from "../types";
+import { url } from '../url';
+import { authorizationData } from '../authorisation';
+import { Branch } from '../types';
 
 async function getCatalogues() {
   return await fetch(`${url}/2.0/catalogues/`, {
@@ -19,7 +19,7 @@ async function getCatalogues() {
           catalogues: branch.key,
         };
       });
-      return changedCatalogBranches
+      return changedCatalogBranches;
     });
 }
 export const catalogBranchesInit = await getCatalogues();

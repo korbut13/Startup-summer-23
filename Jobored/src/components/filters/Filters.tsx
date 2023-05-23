@@ -2,7 +2,7 @@ import { Group, Text, Button, NumberInput } from '@mantine/core';
 import { CloseIcon } from './_closeIcon';
 import FilterBranch from './FilterBranch';
 import { BranchParams } from '../../types';
-import { useStyles } from '../../utils/styles';
+import { UseStyles } from '../../utils/styles';
 
 export default function Filters({
   catalogBranches,
@@ -25,11 +25,11 @@ export default function Filters({
   sendFilters: () => void;
   clearFilters: () => void;
 }) {
-  const { classes } = useStyles();
+  const { classes } = UseStyles();
   return (
     <>
-      <Group align='flex-start' mb='1.7rem' style={{ justifyContent: 'space-between' }}>
-        <Text fz="20px" ff='InterBold' fw={700} lh="20px" >
+      <Group align="flex-start" mb="1.7rem" style={{ justifyContent: 'space-between' }}>
+        <Text fz="20px" ff="InterBold" fw={700} lh="20px">
           Фильтры
         </Text>
         <Button
@@ -38,7 +38,7 @@ export default function Filters({
           variant="white"
           className={classes.resetFilters}
           styles={{
-            rightIcon: { marginLeft: "3px" }
+            rightIcon: { marginLeft: '3px' },
           }}
         >
           Сбросить все
@@ -60,9 +60,9 @@ export default function Filters({
         onChange={onChangePaymentFrom}
         className={classes.numberInputFrom}
         styles={{
-          control: { border: "none", color: "#ACADB9", justifyContent: "flex-start" },
-          controlUp: { alignItems: "flex-end" },
-          controlDown: { alignItems: "flex-start" }
+          control: { border: 'none', color: '#ACADB9', justifyContent: 'flex-start' },
+          controlUp: { alignItems: 'flex-end' },
+          controlDown: { alignItems: 'flex-start' },
         }}
       ></NumberInput>
       <NumberInput
@@ -73,16 +73,32 @@ export default function Filters({
         value={paymentToValue.length === 0 ? '' : +paymentToValue}
         onChange={onChangePaymentTo}
         styles={{
-          input: { borderRadius: "8px", marginBottom: "20px", height: "42px", fontWeight: 400, fontSize: "14px", lineHeight: "20px", fontFamily: "Inter" },
-          control: { border: "none", color: "#ACADB9", justifyContent: "flex-start" },
-          controlUp: { alignItems: "flex-end" },
-          controlDown: { alignItems: "flex-start" }
+          input: {
+            borderRadius: '8px',
+            marginBottom: '20px',
+            height: '42px',
+            fontWeight: 400,
+            fontSize: '14px',
+            lineHeight: '20px',
+            fontFamily: 'Inter',
+          },
+          control: { border: 'none', color: '#ACADB9', justifyContent: 'flex-start' },
+          controlUp: { alignItems: 'flex-end' },
+          controlDown: { alignItems: 'flex-start' },
         }}
       ></NumberInput>
       <Button
         data-elem="search-button"
         type="submit"
-        sx={{ fontFamily: 'Inter', fontWeight: 500, fontSize: "14px", height: "40px", borderRadius: "8px", background: "#5E96FC", width: "100%" }}
+        sx={{
+          fontFamily: 'Inter',
+          fontWeight: 500,
+          fontSize: '14px',
+          height: '40px',
+          borderRadius: '8px',
+          background: '#5E96FC',
+          width: '100%',
+        }}
         onClick={sendFilters}
       >
         Применить

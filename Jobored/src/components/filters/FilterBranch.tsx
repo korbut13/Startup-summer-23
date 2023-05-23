@@ -1,7 +1,7 @@
 import { Select } from '@mantine/core';
 import { ChevronDown } from 'tabler-icons-react';
 import { BranchParams } from '../../types';
-import { useStyles } from '../../utils/styles';
+import { UseStyles } from '../../utils/styles';
 
 export default function FilterBranch({
   catalogBranches,
@@ -12,7 +12,7 @@ export default function FilterBranch({
   value: string;
   onChangeBranch: (value: string) => void;
 }) {
-  const { classes } = useStyles();
+  const { classes } = UseStyles();
   return (
     <Select
       data-elem="industry-select"
@@ -26,11 +26,11 @@ export default function FilterBranch({
       styles={{
         rightSection: {
           pointerEvents: 'none',
-          width: "2.875rem",
+          width: '2.875rem',
         },
         item: {
-          whiteSpace: "initial"
-        }
+          whiteSpace: 'initial',
+        },
       }}
       data={catalogBranches}
       dropdownPosition="bottom"

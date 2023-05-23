@@ -1,7 +1,7 @@
 import { url } from '../url';
 import { InitialDataFilters } from '../types';
 
-export default function createUrlString(dataFilters: InitialDataFilters, activePage: number) {
+export default function createUrlToVacancies(dataFilters: InitialDataFilters, activePage: number) {
   let pathUrl = `${url}/2.0/vacancies/?page=${activePage - 1}&count=4&`;
   pathUrl =
     dataFilters.payment_from.length > 0 || dataFilters.payment_to.length > 0
@@ -17,5 +17,5 @@ export default function createUrlString(dataFilters: InitialDataFilters, activeP
     }
     pathUrl;
   }
-  return pathUrl.slice(0, -1)
+  return pathUrl.slice(0, -1);
 }

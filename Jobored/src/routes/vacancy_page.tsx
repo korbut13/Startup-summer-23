@@ -5,7 +5,7 @@ import { authorizationData } from '../authorisation';
 import { token } from '../requests/token';
 import { Vacancy } from '../types';
 import { VacancyCard } from '../components/vacancyCard/VacancyCard';
-import { useStyles } from '../utils/styles';
+import { UseStyles } from '../utils/styles';
 
 const initialVacancy = {
   id: 0,
@@ -20,8 +20,8 @@ const initialVacancy = {
 };
 
 export default function VacancyPage() {
-  const { classes } = useStyles();
-  const [loading, setLoading] = React.useState(true)
+  const { classes } = UseStyles();
+  const [loading, setLoading] = React.useState(true);
   const [vacancy, setVacancy] = React.useState<Vacancy>(initialVacancy);
   const [favorite, setFavorite] = React.useState<number[]>(
     JSON.parse(localStorage.getItem('favoriteVacancies') || '[]')
@@ -44,16 +44,15 @@ export default function VacancyPage() {
           setLoading(false);
         });
     } catch (error: unknown) {
-      console.error(error)
+      console.error(error);
     }
   }, []);
   return (
-    <Container
-      size={773}
-      className={classes.containerPages}
-    >
-      {loading ? <Loader size="xl" w="100%" /> :
-        (<>
+    <Container size={773} className={classes.containerPages}>
+      {loading ? (
+        <Loader size="xl" w="100%" />
+      ) : (
+        <>
           <VacancyCard
             vacancy={vacancy}
             favoriteVacancies={favorite}
@@ -69,9 +68,12 @@ export default function VacancyPage() {
               localStorage.setItem('favoriteVacancies', JSON.stringify(nextState));
             }}
           />
-          <div className={classes.vacancyDescription} dangerouslySetInnerHTML={{ __html: vacancy.vacancyRichText }}></div>
-        </>)
-      }
+          <div
+            className={classes.vacancyDescription}
+            dangerouslySetInnerHTML={{ __html: vacancy.vacancyRichText }}
+          ></div>
+        </>
+      )}
     </Container>
   );
 }
