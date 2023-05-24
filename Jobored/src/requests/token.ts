@@ -8,7 +8,7 @@ async function updateToken(url: string, refreshAuthorData: RefreshAuthorisationD
   return await fetch(`${url}/2.0/oauth2/refresh_token/?${refreshAuthorDataString}`, {
     method: 'GET',
     headers: {
-      'x-secret-key': 'GEU4nvd3rej*jeh.eqp',
+      'x-secret-key': import.meta.env.VITE_X_SECRET_KEY,
     },
   })
     .then((response) => response.json())
@@ -20,10 +20,8 @@ async function updateToken(url: string, refreshAuthorData: RefreshAuthorisationD
 }
 
 const defaultTtl = 1685360849;
-const defaultAccessToken =
-  'v3.r.137440105.38e5e6adf67b93f4aca3d391ebe6fae7068e9838.bdc61b8b343cafc07423910f09ff1eaf6f9c494d';
-const defaultRefreshToken =
-  'v3.r.137440105.deb036b56e1f469011c1fb60bb195bad88cb5514.30a8ab9d1ce049b512002257cae83b0426492708';
+const defaultAccessToken = import.meta.env.VITE_DEFAULT_ACCESS_TOKEN;
+const defaultRefreshToken = import.meta.env.VITE_DEFAULT_REFRESH_TOKEN;
 
 const refreshAuthorisationData: RefreshAuthorisationData = {
   refresh_token: localStorage.getItem('refresh_token') || defaultRefreshToken,

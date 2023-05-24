@@ -6,7 +6,7 @@ async function getCatalogues() {
   return await fetch(`${url}/2.0/catalogues/`, {
     method: 'GET',
     headers: {
-      'x-secret-key': 'GEU4nvd3rej*jeh.eqp',
+      'x-secret-key': import.meta.env.VITE_X_SECRET_KEY,
       'X-Api-App-Id': `${authorizationData.client_secret}`,
     },
   })

@@ -29,7 +29,7 @@ export default function FavoritesVacanciesPage() {
         fetch(createUrlToFavotite(favorite, activePage), {
           method: 'GET',
           headers: {
-            'x-secret-key': 'GEU4nvd3rej*jeh.eqp',
+            'x-secret-key': import.meta.env.VITE_X_SECRET_KEY,
             'X-Api-App-Id': `${authorizationData.client_secret}`,
             Authorization: `Bearer ${token}`,
             'Content-Type': 'application/json',

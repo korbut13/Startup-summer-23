@@ -1,3 +1,3 @@
-//export const url = 'https://startup-summer-2023-proxy.onrender.com';
+export const url = import.meta.env.VITE_URL;
 
-export const url = 'https://startup-summer-proxy-production.up.railway.app';
+//export const url = 'https://startup-summer-proxy-production.up.railway.app';
