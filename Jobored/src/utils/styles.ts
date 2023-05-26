@@ -176,7 +176,7 @@ export const UseStyles = createStyles((theme) => ({
     borderRadius: '12px',
     border: '1px solid #EAEBED',
     marginBottom: '16px',
-    padding: '23px 22px 23px 22px',
+    padding: '22px 22px 23px 22px',
   },
   group: {
     flexWrap: 'nowrap',

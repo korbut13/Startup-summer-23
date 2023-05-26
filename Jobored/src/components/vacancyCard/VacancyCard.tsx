@@ -29,7 +29,7 @@ export const VacancyCard: React.FC<VacancyCardProps> = ({
             style={{ width: '90%' }}
           >
             <Text className={getStyleName('profession')}>
-              {vacancy.profession} ({vacancy.firm_name})
+              {vacancy.profession}
             </Text>
 
             <Group spacing="1.05rem">
